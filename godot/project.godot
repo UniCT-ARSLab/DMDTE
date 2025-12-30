@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 Globals="*res://autoloads/Globals.gd"
 CmdArgs="*res://scripts/cmdargs.gd"
+LoaderScript="*res://autoloads/LoaderScript.gd"
 PhantomCameraManager="*res://addons/phantom_camera/scripts/managers/phantom_camera_manager.gd"
 
 [debug_draw_3d]
@@ -32,6 +33,7 @@ enabled=PackedStringArray("res://addons/phantom_camera/plugin.cfg")
 [global_group]
 
 Clickable=""
+Target=""
 
 [input]
 

@@ -1,5 +1,6 @@
-[gd_scene load_steps=21 format=3 uid="uid://dg8revfpg5um5"]
+[gd_scene load_steps=24 format=3 uid="uid://dg8revfpg5um5"]
 
+[ext_resource type="Script" uid="uid://dvp7faimagc4k" path="res://views/eurobot/world.gd" id="1_0lf0d"]
 [ext_resource type="Script" uid="uid://c2ig3thn4hvkd" path="res://scripts/framework/RAI/DTPNetwork.gd" id="1_l6ign"]
 [ext_resource type="PackedScene" uid="uid://c1g2srcscygm6" path="res://scenes/alvik/alvik.tscn" id="2_0lf0d"]
 [ext_resource type="PackedScene" uid="uid://cohevf6dfberv" path="res://scenes/semaphore/semaphore_dt.tscn" id="3_nkve0"]
@@ -9,7 +10,6 @@
 [ext_resource type="Script" uid="uid://csjccrhj5wnx7" path="res://addons/phantom_camera/scripts/phantom_camera/phantom_camera_3d.gd" id="7_dgwlc"]
 [ext_resource type="Script" uid="uid://8umksf8e80fw" path="res://addons/phantom_camera/scripts/resources/tween_resource.gd" id="8_i7hvv"]
 [ext_resource type="Script" uid="uid://b8hhnqsugykly" path="res://addons/phantom_camera/scripts/resources/camera_3d_resource.gd" id="9_vjfy0"]
-[ext_resource type="PackedScene" uid="uid://dipjv47o0t4sp" path="res://scenes/spawner_zone/spawner_zone.tscn" id="10_ld76s"]
 [ext_resource type="Texture2D" uid="uid://dsahh7r3uufkx" path="res://assets/eurobot/table.svg" id="11_l6ign"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wrmyf"]
@@ -35,12 +35,12 @@ script = ExtResource("9_vjfy0")
 metadata/_custom_type_script = "uid://b8hhnqsugykly"
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_e8il8"]
-vertices = PackedVector3Array(-146.5, 2, -96.5, -146.5, 2, 96.5, 146.5, 2, 96.5, 146.5, 2, -96.5)
-polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
-cell_height = 1.0
+vertices = PackedVector3Array(68.25, 2.7374268, 85, 68.5, 2.7374268, 65.25, 67, 2.7374268, 65.25, 67, 2.7374268, -65, 69, 2.7374268, -65, 69, 2.7374268, -85, 57.5, 2.7374268, 60.5, 57.5, 2.7374268, -60.25, 52.25, 2.7374268, 50.5, -135, 2.7374268, 85, 52.25, 2.7374268, -50.25, -135, 2.7374268, -85, 75.75, 2.7374268, -65, 75.75, 2.7374268, -85, 77.75, 2.7374268, -65, 87.25, 2.7374268, -60.25, 92.5, 2.7374268, -50.25, 135, 2.7374268, -48.25, 135, 2.7374268, -85, 92.5, 2.7374268, -48.25, 92.5, 2.7374268, 48.5, 135, 2.7374268, 48.5, 77.75, 2.7374268, 65.25, 76.25, 2.7374268, 65.25, 76.5, 2.7374268, 85, 87.75, 2.7374268, 60, 92.5, 2.7374268, 50.5, 135, 2.7374268, 85)
+polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(5, 4, 3), PackedInt32Array(6, 2, 0), PackedInt32Array(7, 5, 3), PackedInt32Array(6, 0, 8), PackedInt32Array(8, 0, 9), PackedInt32Array(7, 10, 5), PackedInt32Array(5, 10, 11), PackedInt32Array(8, 9, 10), PackedInt32Array(10, 9, 11), PackedInt32Array(5, 13, 4), PackedInt32Array(4, 13, 12), PackedInt32Array(14, 12, 13), PackedInt32Array(15, 14, 13), PackedInt32Array(15, 13, 16), PackedInt32Array(16, 13, 17), PackedInt32Array(17, 13, 18), PackedInt32Array(17, 19, 16), PackedInt32Array(19, 17, 20), PackedInt32Array(20, 17, 21), PackedInt32Array(24, 23, 22), PackedInt32Array(24, 22, 25), PackedInt32Array(25, 26, 24), PackedInt32Array(24, 26, 21), PackedInt32Array(24, 21, 27), PackedInt32Array(26, 20, 21), PackedInt32Array(1, 23, 0), PackedInt32Array(0, 23, 24)]
+cell_height = 2.0
 border_size = 1.0
-agent_height = 3.5
-agent_radius = 3.5
+agent_height = 35.0
+agent_radius = 15.0
 
 [sub_resource type="QuadMesh" id="QuadMesh_0lf0d"]
 size = Vector2(300, 200)
@@ -52,7 +52,19 @@ albedo_texture = ExtResource("11_l6ign")
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_ux4hi"]
 data = PackedVector3Array(150, 0, 100, -150, 0, 100, 150, 0, -100, -150, 0, 100, -150, 0, -100, 150, 0, -100)
 
-[node name="EmptyWorld" type="Node3D"]
+[sub_resource type="BoxMesh" id="BoxMesh_l6ign"]
+size = Vector3(10, 20, 100)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_l6ign"]
+top_radius = 5.0
+bottom_radius = 0.0
+height = 20.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0lf0d"]
+albedo_color = Color(1, 0, 0, 1)
+
+[node name="Eurobot" type="Node3D"]
+script = ExtResource("1_0lf0d")
 
 [node name="Network" type="Node" parent="."]
 
@@ -63,7 +75,7 @@ digitalTwins = Dictionary[String, PackedScene]({
 "robot_eurobot": ExtResource("4_ldvau"),
 "semaforo": ExtResource("3_nkve0")
 })
-spawn_path = NodePath("../../Environment/NavigationRegion3D/Twins")
+spawn_path = NodePath("../../Environment/Twins")
 
 [node name="MultiplayerNetwork" type="Node" parent="Network" node_paths=PackedStringArray("dtp_network", "multiplayer_spawner")]
 script = ExtResource("5_58ue0")
@@ -73,7 +85,7 @@ metadata/_custom_type_script = "uid://bjofuxuj20ie3"
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="Network/MultiplayerNetwork"]
 _spawnable_scenes = PackedStringArray("uid://c1g2srcscygm6", "uid://cohevf6dfberv", "uid://b5pa6bkw6ub6d")
-spawn_path = NodePath("../../../Environment/NavigationRegion3D/Twins")
+spawn_path = NodePath("../../../Environment/Twins")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_xju21")
@@ -84,7 +96,7 @@ shadow_enabled = true
 directional_shadow_max_distance = 500.0
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.70710677, 0.70710677, 0, -0.70710677, 0.70710677, 0, 124.269, 141.28)
+transform = Transform3D(0.9999905, 0.0025800993, -0.0035188072, 0, 0.80644417, 0.59131014, 0.0043633603, -0.5913044, 0.80643654, 151.11469, 125.76248, 55.983826)
 
 [node name="PhantomCameraHost" type="Node" parent="Camera3D"]
 process_priority = 300
@@ -93,34 +105,17 @@ script = ExtResource("6_sxcpe")
 metadata/_custom_type_script = "uid://bd046eokvcnu2"
 
 [node name="PhantomCamera3D" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.70710677, 0.70710677, 0, -0.70710677, 0.70710677, 0, 124.269, 141.28)
+transform = Transform3D(0.9999905, 0.0025800993, -0.0035188072, 0, 0.80644417, 0.59131014, 0.0043633603, -0.5913044, 0.80643654, 151.11469, 125.76248, 55.983826)
 script = ExtResource("7_dgwlc")
 priority = 2
 tween_resource = SubResource("Resource_rthjb")
 camera_3d_resource = SubResource("Resource_1g8w1")
 
 [node name="Environment" type="Node3D" parent="."]
-
-[node name="SpawnZones" type="Node" parent="Environment"]
-
-[node name="SpawnerZone" parent="Environment/SpawnZones" instance=ExtResource("10_ld76s")]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -99.99444, 0.08285714, 75.44606)
-player_number = 1
-
-[node name="SpawnerZone2" parent="Environment/SpawnZones" instance=ExtResource("10_ld76s")]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 100.00556, 0.08285714, 75.44606)
-player_number = 3
-
-[node name="SpawnerZone3" parent="Environment/SpawnZones" instance=ExtResource("10_ld76s")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -99.99444, 0.08285714, -50.55394)
-player_number = 4
-
-[node name="SpawnerZone4" parent="Environment/SpawnZones" instance=ExtResource("10_ld76s")]
-transform = Transform3D(1, 0, -1.7484555e-07, 0, 1, 0, 1.7484555e-07, 0, 1, 100.00556, 0.08285714, -50.55394)
-player_number = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 150, 0, -100)
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="Environment" groups=["Clickable"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.009147339, 0, -0.0030491066)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.009140015, 0, -0.0030517578)
 navigation_mesh = SubResource("NavigationMesh_e8il8")
 
 [node name="Arena" type="StaticBody3D" parent="Environment/NavigationRegion3D"]
@@ -133,4 +128,19 @@ surface_material_override/0 = SubResource("StandardMaterial3D_nkve0")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/NavigationRegion3D/Arena"]
 shape = SubResource("ConcavePolygonShape3D_ux4hi")
 
-[node name="Twins" type="Node" parent="Environment/NavigationRegion3D"]
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Environment/NavigationRegion3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 72.336655, 6.7374268, 0)
+mesh = SubResource("BoxMesh_l6ign")
+
+[node name="SpawnZones" type="Node" parent="Environment"]
+
+[node name="Twins" type="Node" parent="Environment"]
+
+[node name="Target" type="Node3D" parent="Environment" groups=["Target"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 117.230286, 0, 18.53389)
+
+[node name="Target" type="MeshInstance3D" parent="Environment/Target"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.505315, 0)
+mesh = SubResource("CylinderMesh_l6ign")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_0lf0d")

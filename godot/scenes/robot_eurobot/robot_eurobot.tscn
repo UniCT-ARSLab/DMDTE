@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://b5pa6bkw6ub6d"]
+[gd_scene load_steps=12 format=3 uid="uid://b5pa6bkw6ub6d"]
 
 [ext_resource type="PackedScene" uid="uid://cdlmgj0r6fqm0" path="res://scenes/digital_twin/generic_digital_twin.tscn" id="1_i2hsg"]
 [ext_resource type="Script" uid="uid://dijgkhv6pivix" path="res://scenes/robot_eurobot/robot_eurobot.gd" id="2_n5o30"]
 [ext_resource type="Script" uid="uid://dpmgtuoit7f1q" path="res://scripts/framework/RAI/DTPProperty.gd" id="3_474fi"]
+[ext_resource type="Script" uid="uid://bq5nf64cabx0r" path="res://scenes/robot_eurobot/robot.gd" id="4_0eull"]
 [ext_resource type="Script" uid="uid://bih7dug8dpfch" path="res://scenes/robot_eurobot/ghost.gd" id="4_eblwe"]
 
 [sub_resource type="Resource" id="Resource_eblwe"]
@@ -10,6 +11,12 @@ script = ExtResource("3_474fi")
 name = "pose"
 type = 9
 metadata/_custom_type_script = "uid://dpmgtuoit7f1q"
+
+[sub_resource type="PrismMesh" id="PrismMesh_eblwe"]
+size = Vector3(10, 10, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0eull"]
+albedo_color = Color(1, 0, 0, 1)
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_n5o30"]
 top_radius = 15.0
@@ -30,27 +37,47 @@ script = ExtResource("2_n5o30")
 ghost = NodePath("../Ghost")
 properties = Array[ExtResource("3_474fi")]([SubResource("Resource_eblwe")])
 
-[node name="Model" parent="." index="1"]
-visible = false
-collision_mask = 5
+[node name="TimerNavigation" type="Timer" parent="." index="1"]
+wait_time = 0.05
+autostart = true
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Model" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7477512, 0)
+[node name="Model" parent="." index="2"]
+top_level = true
+collision_mask = 5
+script = ExtResource("4_0eull")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="Model" index="0"]
+avoidance_enabled = true
+height = 35.0
+radius = 15.0
+debug_enabled = true
+debug_use_custom = true
+debug_path_custom_color = Color(1, 0, 0, 1)
+debug_path_custom_point_size = 8.5
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="Model" index="1"]
+transform = Transform3D(-4.371139e-08, 1, 4.371139e-08, 0, -4.371139e-08, 1, 1, 4.371139e-08, 1.9106855e-15, 8.106791, 35.7627, 0)
+mesh = SubResource("PrismMesh_eblwe")
+skeleton = NodePath("../../Ghost")
+surface_material_override/0 = SubResource("StandardMaterial3D_0eull")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Model" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 17.5, 0)
 mesh = SubResource("CylinderMesh_n5o30")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Model" index="1"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7702732, 0)
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Model" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 17.5, 0)
 shape = SubResource("ConvexPolygonShape3D_eblwe")
 
-[node name="NavigationAgent3D" type="NavigationAgent3D" parent="Model" index="2"]
-avoidance_enabled = true
-debug_enabled = true
-
-[node name="Ghost" parent="." index="2"]
+[node name="Ghost" parent="." index="3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.24775052, 0)
+visible = false
 script = ExtResource("4_eblwe")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ghost" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 17.353163, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 17.5, 0)
 mesh = SubResource("CylinderMesh_n5o30")
 surface_material_override/0 = SubResource("StandardMaterial3D_n5o30")
+
+[connection signal="on_update" from="DTPPeer" to="." method="_on_dtp_peer_on_update"]
+[connection signal="timeout" from="TimerNavigation" to="Model" method="_on_timer_navigation_timeout"]

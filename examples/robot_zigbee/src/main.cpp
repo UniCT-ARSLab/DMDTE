@@ -69,6 +69,7 @@ void taskDTP(void *pvParameters)
 
 void taskZigbee(void *pvParameters)
 {
+    Pose aux;
 
     while (1)
     {
@@ -78,7 +79,10 @@ void taskZigbee(void *pvParameters)
             
             zigbee->readBytes((uint8_t *)&packetReceived, sizeof(t_xbee_packet));
             display->printf("Ricevo : T = %x\n", packetReceived.packet_type);
-            memcpy(&(digitaltwin.pose), packetReceived.payload, sizeof(Pose));
+            memcpy(&(aux), packetReceived.payload, sizeof(Pose));
+            digitaltwin.pose.x = (aux.y / 10.0) ;
+            digitaltwin.pose.y = (aux.x / 10.0) * -1;
+            digitaltwin.pose.theta = aux.theta;
            
             display->printf("X: %f, Y: %f, A: %f\n", digitaltwin.pose.x, digitaltwin.pose.y, digitaltwin.pose.theta);
             display->display();

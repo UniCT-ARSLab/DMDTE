@@ -38,7 +38,8 @@ func _on_multiplayer_synchronizer_synchronized():
 func disableProcesses():
 	dtp_peer.process_mode =  PROCESS_MODE_DISABLED
 	ghost.visible = false
-	controls.disableProcesses()
+	if controls:
+		controls.disableProcesses()
 
 @rpc("authority", "call_local", "reliable")
 func despawn_dt():
