@@ -54,5 +54,3 @@ script = ExtResource("4_eblwe")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 17.353163, 0)
 mesh = SubResource("CylinderMesh_n5o30")
 surface_material_override/0 = SubResource("StandardMaterial3D_n5o30")
-
-[connection signal="on_update" from="DTPPeer" to="." method="_on_dtp_peer_on_update"]
