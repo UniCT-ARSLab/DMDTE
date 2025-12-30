@@ -16,15 +16,15 @@ properties/2/replication_mode = 1
 
 [node name="GenericDigitalTwin" type="Node"]
 
+[node name="DTPPeer" type="Node" parent="."]
+script = ExtResource("2_88x8r")
+metadata/_custom_type_script = "uid://djs832slae7dd"
+
 [node name="Model" type="CharacterBody3D" parent="."]
 
 [node name="Ghost" type="Node3D" parent="."]
 script = ExtResource("1_21gnr")
 metadata/_custom_type_script = "uid://brik66cacud45"
-
-[node name="DTPPeer" type="Node" parent="."]
-script = ExtResource("2_88x8r")
-metadata/_custom_type_script = "uid://djs832slae7dd"
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
 root_path = NodePath("../DTPPeer")
