@@ -1,0 +1,62 @@
+[gd_scene load_steps=7 format=4 uid="uid://dipjv47o0t4sp"]
+
+[ext_resource type="Script" uid="uid://b24x2n1rxqw2h" path="res://scenes/spawner_zone/spawner_zone.gd" id="1_yraou"]
+[ext_resource type="Texture2D" uid="uid://dvxmpxvadffxy" path="res://assets/level/Textures/colormap.png" id="2_8mhuv"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fbb64"]
+resource_name = "colormap"
+cull_mode = 2
+albedo_texture = ExtResource("2_8mhuv")
+texture_filter = 2
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_ketma"]
+_surfaces = [{
+"aabb": AABB(-0.5, 0, -0.5, 1, 1e-05, 1),
+"format": 34896613377,
+"index_count": 48,
+"index_data": PackedByteArray("AAABAAIAAgADAAAAAgAEAAMABAAFAAMABgAHAAgACQAGAAgACgAJAAgACAALAAoADAANAA4ADgAPAAwADwAQAAwAEAARAAwAEgATABQAEgAUABUAFQAWABIAFwASABYA"),
+"name": "colormap",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("ZeYAAP+/AAD//wAA/78AAP//AAD//wAAZeYAAGXmAAD/vwAA//8AAP+/AABl5gAAAAAAAP+/AACZGQAA/78AAJkZAABl5gAAAAAAAP//AAD/PwAA//8AAP8/AABl5gAAAAAAAAAAAAD/PwAAAAAAAP8/AACZGQAAmRkAAJkZAACZGQAA/z8AAAAAAAD/PwAAZeYAAJkZAAD/vwAAmRkAAP+/AAAAAAAA//8AAAAAAAD//wAA/z8AAGXmAAD/PwAA")
+}]
+blend_shape_mode = 0
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_23w51"]
+resource_name = "indicator-square-c_indicator-square-c"
+_surfaces = [{
+"aabb": AABB(-0.5, 0, -0.5, 1, 1e-05, 1),
+"attribute_data": PackedByteArray("/0f/n/9H/5//R/+f/0f/n/9H/5//R/+f/0f/n/9H/5//R/+f/0f/n/9H/5//R/+f/0f/n/9H/5//R/+f/0f/n/9H/5//R/+f/0f/n/9H/5//R/+f/0f/n/9H/5//R/+f"),
+"format": 34896613399,
+"index_count": 48,
+"index_data": PackedByteArray("AAABAAIAAgADAAAAAgAEAAMABAAFAAMABgAHAAgACQAGAAgACgAJAAgACAALAAoADAANAA4ADgAPAAwADwAQAAwAEAARAAwAEgATABQAEgAUABUAFQAWABIAFwASABYA"),
+"material": SubResource("StandardMaterial3D_fbb64"),
+"name": "colormap",
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("ZeYAAP+//////wAA/7//////AAD/////ZeYAAGXm////vwAA//////+/AABl5v//AAAAAP+///+ZGQAA/7///5kZAABl5v//AAAAAP//////PwAA//////8/AABl5v//AAAAAAAA////PwAAAAD///8/AACZGf//mRkAAJkZ//+ZGQAA/z///wAAAAD/P///ZeYAAJkZ////vwAAmRn///+/AAAAAP////8AAAAA/////wAA/z///2XmAAD/P////3//v/9//7//f/+//3//v/9//7//f/+//3//v/9//7//f/+//3//v/9//7//f/+//3//v/9//7//f/+//3//v/9//7//f/+//3//v/9//7//f/+//3//v/9//7//f/+/")
+}]
+blend_shape_mode = 0
+shadow_mesh = SubResource("ArrayMesh_ketma")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yraou"]
+albedo_color = Color(0, 0.41568628, 0.83137256, 1)
+
+[node name="SpawnerZone" type="Node3D"]
+top_level = true
+script = ExtResource("1_yraou")
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(-14, 0, 1.2239188e-06, 0, 14, 0, -1.2239188e-06, 0, -14, 0, 0, 0)
+mesh = SubResource("ArrayMesh_23w51")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_yraou")
+
+[node name="Label3D" type="Label3D" parent="."]
+transform = Transform3D(-1, -8.742278e-08, -3.821371e-15, 0, -4.371139e-08, 1, -8.742278e-08, 1, 4.371139e-08, 0, 0, 0)
+modulate = Color(0, 0.41568628, 0.83137256, 1)
+text = "P1"
+font_size = 945
+outline_size = 127

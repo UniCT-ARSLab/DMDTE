@@ -1,0 +1,26 @@
+\chapter*{Conclusione}
+
+
+
+\noindent L'implementazione di \textit{Distributed Multi-Agent Digital Twin Environment} prodotta come progetto di tesi offre una vasta gamma di strumenti atti a facilitare lo sviluppo di soluzioni digital twin multi agente con il motore di gioco Godot.
+
+È stato concretamente realizzato il protocollo \textit{Digital Twin Protocol}, fondamenta di tutto il progetto, il quale non solo permette uno scambio bidirezionale semplice e veloce di stato tra i due gemelli, ma anche invocazioni a procedura remota. 
+\smallbreak
+Al supporto di DTP è stata realizzata una libreria semplice e immediata per la definizione di interfacce \textit{Real Agent Interface} in C++, enfatizzando l'uso di più semplici ma altrettanto sofisticati paradigmi dichiarativi di alto livello, con particolare attenzione alla facilità d'uso e la portabilità per dispositivi embedded e IoT, a cui è seguita una digressione di percorso atta a rendere compatibile la libreria ENet con sistemi embedded basati su ESP32.
+\smallbreak
+Infine, una suite di componenti e strumenti sono stati realizzati per il motore di gioco Godot, atti alla realizzazione di complessi sistemi multi-agente di gemelli digitali, la quale sfrutta pienamente le API offerte dalla piattaforma per il networking, semplificando drasticamente la realizzazione di sistemi digital twin distribuiti.
+
+I risultati ottenuti soddisfano pienamente gli obiettivi implementativi prefissati, confermando la solidità dell'architettura proposta nell'articolo scientifico su cui si fonda\cite{Russo2025}.
+\bigbreak
+La conclusione di questo lavoro non è un punto di arrivo definitivo, bensì pone le basi per ulteriori e interessanti sviluppi.
+
+In primo luogo, con l'obiettivo di migliorare la qualità del lavoro svolto finora con il protocollo DTP, si intende introdurre un formato di serializzazione dati binario e leggero, così da ridurre ambiguità e potenziali errori.
+\smallbreak
+Di notevole interesse per lavori futuri è la ricerca e implementazione di una soluzione peer-to-peer per la comunicazione tra istanze del framework, così da eliminare la corrente soluzione di natura prettamente client-server, e quindi estendere ulteriormente il framework introducendo robusti sistemi ridondanti e distribuiti di gemelli digitali multi agente.
+\smallbreak
+Infine, sarebbe interessante esplorare la portabilità del framework, o la realizzazione di una sua particolare implementazione compatibile, in grado di eseguire in sistemi embedded.
+
+
+
+
+\addcontentsline{toc}{chapter}{Conclusione} %per fare inserire il capitolo nella tabella dei contenuti

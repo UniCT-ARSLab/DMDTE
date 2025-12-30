@@ -1,0 +1,149 @@
+[gd_scene load_steps=23 format=3 uid="uid://eat2ggo6l5t7"]
+
+[ext_resource type="Script" uid="uid://djs832slae7dd" path="res://scripts/framework/RAI/DTPPeer.gd" id="1_103ve"]
+[ext_resource type="Script" uid="uid://ctd0x1fb2gsyl" path="res://scenes/digital_twin/digital_twin.gd" id="1_wjauc"]
+[ext_resource type="Script" uid="uid://dpmgtuoit7f1q" path="res://scripts/framework/RAI/DTPProperty.gd" id="2_wvf4o"]
+[ext_resource type="Script" uid="uid://ugu3iuevw3s3" path="res://scripts/framework/RAI/DTPMethod.gd" id="3_o6823"]
+[ext_resource type="Script" uid="uid://dso2ssx5e6x3s" path="res://scenes/digital_twin/controllers/ManualController.gd" id="4_q86rp"]
+[ext_resource type="Script" uid="uid://ds7n717yi6ldx" path="res://scripts/demo/TankGhost.gd" id="5_ac63k"]
+[ext_resource type="Script" uid="uid://c05prhm65uqil" path="res://scripts/demo/TankModel.gd" id="6_fadk8"]
+[ext_resource type="PackedScene" uid="uid://boftph2u2lc82" path="res://assets/tank/tank ghost.glb" id="6_wvf4o"]
+[ext_resource type="Script" uid="uid://i24weggbestk" path="res://scripts/demo/PIDController.gd" id="7_34p2i"]
+[ext_resource type="PackedScene" uid="uid://b54iiv3dsjayt" path="res://assets/tank/tank.glb" id="8_3ejkt"]
+[ext_resource type="Script" uid="uid://bv1a5yjiql3jy" path="res://scenes/digital_twin/controllers/controls.gd" id="10_nbvlo"]
+[ext_resource type="Script" uid="uid://dw0l04w7uecm7" path="res://scenes/digital_twin/controllers/agent_controller.gd" id="11_wi8nb"]
+
+[sub_resource type="Resource" id="Resource_41oac"]
+script = ExtResource("2_wvf4o")
+name = "battery"
+type = 1
+metadata/_custom_type_script = "uid://dpmgtuoit7f1q"
+
+[sub_resource type="Resource" id="Resource_lnl5y"]
+script = ExtResource("2_wvf4o")
+index = 1
+name = "is_battery_charging"
+type = 1
+metadata/_custom_type_script = "uid://dpmgtuoit7f1q"
+
+[sub_resource type="Resource" id="Resource_svbxs"]
+script = ExtResource("2_wvf4o")
+index = 2
+name = "pose"
+type = 9
+metadata/_custom_type_script = "uid://dpmgtuoit7f1q"
+
+[sub_resource type="Resource" id="Resource_rjot6"]
+script = ExtResource("2_wvf4o")
+index = 3
+name = "drive_speed"
+type = 8
+metadata/_custom_type_script = "uid://dpmgtuoit7f1q"
+
+[sub_resource type="Resource" id="Resource_1wgkl"]
+script = ExtResource("3_o6823")
+name = "drive"
+args = Array[int]([6, 6])
+metadata/_custom_type_script = "uid://ugu3iuevw3s3"
+
+[sub_resource type="Resource" id="Resource_3mysc"]
+script = ExtResource("3_o6823")
+index = 1
+name = "reset_pose"
+args = Array[int]([6, 6, 6])
+metadata/_custom_type_script = "uid://ugu3iuevw3s3"
+
+[sub_resource type="Resource" id="Resource_ee5rw"]
+script = ExtResource("7_34p2i")
+output_deadzone = 0.5
+apply_windup = true
+windup_low = -1.0
+windup_high = 1.0
+apply_floor_step = true
+floor_step = 0.5
+metadata/_custom_type_script = "uid://i24weggbestk"
+
+[sub_resource type="Resource" id="Resource_7cc42"]
+script = ExtResource("7_34p2i")
+output_deadzone = 0.5
+apply_windup = true
+windup_low = -1.0
+windup_high = 1.0
+apply_floor_step = true
+floor_step = 0.5
+metadata/_custom_type_script = "uid://i24weggbestk"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wvf4o"]
+transparency = 1
+albedo_color = Color(0, 0, 1, 0.49803922)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_lnl5y"]
+properties/0/path = NodePath("Model:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("Model:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:multiplayer_peer_id")
+properties/2/spawn = true
+properties/2/replication_mode = 2
+properties/3/path = NodePath("Ghost:battery")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+
+[node name="DigitalTwin" type="Node"]
+script = ExtResource("1_wjauc")
+
+[node name="DTPPeer" type="Node" parent="." node_paths=PackedStringArray("ghost")]
+script = ExtResource("1_103ve")
+ghost = NodePath("../Ghost")
+properties = Array[ExtResource("2_wvf4o")]([SubResource("Resource_41oac"), SubResource("Resource_lnl5y"), SubResource("Resource_svbxs"), SubResource("Resource_rjot6")])
+methods = Array[ExtResource("3_o6823")]([SubResource("Resource_1wgkl"), SubResource("Resource_3mysc")])
+metadata/_custom_type_script = "uid://djs832slae7dd"
+
+[node name="Model" type="CharacterBody3D" parent="." node_paths=PackedStringArray("ghost")]
+wall_min_slide_angle = 0.0
+safe_margin = 0.1
+script = ExtResource("6_fadk8")
+linearPid = SubResource("Resource_ee5rw")
+angularPid = SubResource("Resource_7cc42")
+ghost = NodePath("../Ghost")
+position_lerp_weight = 4.0
+rotation_slerp_weight = 4.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Model"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, 0)
+
+[node name="Shape" parent="Model" instance=ExtResource("8_3ejkt")]
+transform = Transform3D(-9.8, 0, -8.567432e-07, 0, 9.8, 0, 8.567432e-07, 0, -9.8, 0, 0, 0)
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="Model"]
+
+[node name="Ghost" type="Node3D" parent="."]
+script = ExtResource("5_ac63k")
+
+[node name="Shape" parent="Ghost" instance=ExtResource("6_wvf4o")]
+transform = Transform3D(-2.155, 0, -1.8839609e-07, 0, 2.155, 0, 1.8839609e-07, 0, -2.155, 0, 0, 0)
+
+[node name="tank" parent="Ghost/Shape" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_wvf4o")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_lnl5y")
+
+[node name="Controls" type="Node" parent="."]
+script = ExtResource("10_nbvlo")
+
+[node name="ManualController" type="Node" parent="Controls" node_paths=PackedStringArray("model")]
+script = ExtResource("4_q86rp")
+model = NodePath("../../Model")
+mode = 1
+drawDirectionArrow = true
+metadata/_custom_type_script = "uid://dso2ssx5e6x3s"
+
+[node name="AgentController" type="Node" parent="Controls"]
+script = ExtResource("11_wi8nb")
+
+[connection signal="synchronized" from="MultiplayerSynchronizer" to="." method="_on_multiplayer_synchronizer_synchronized"]
+
+[editable path="Ghost/Shape"]

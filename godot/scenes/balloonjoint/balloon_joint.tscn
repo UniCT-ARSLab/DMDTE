@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://o6advtxymtcm"]
+
+[ext_resource type="Script" uid="uid://b0ykpc7q5tm13" path="res://scenes/balloonjoint/balloon_joint.gd" id="1_tjqcu"]
+
+[node name="BalloonJoint" type="PinJoint3D"]
+script = ExtResource("1_tjqcu")

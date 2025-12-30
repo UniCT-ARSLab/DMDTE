@@ -1,0 +1,74 @@
+[gd_scene load_steps=8 format=3 uid="uid://cjnqq7v8q1d6l"]
+
+[ext_resource type="Texture2D" uid="uid://hmh1a62cy8ox" path="res://assets/misc/balloons/red.png" id="1_jqtd5"]
+[ext_resource type="Script" uid="uid://c25gx75rxj33" path="res://scenes/balloon/balloon.gd" id="1_o0te0"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_o0te0"]
+absorbent = true
+
+[sub_resource type="Animation" id="Animation_2c2u2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite3D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_o0te0"]
+resource_name = "disappear"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite3D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_784ay"]
+_data = {
+&"RESET": SubResource("Animation_2c2u2"),
+&"disappear": SubResource("Animation_o0te0")
+}
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_2c2u2"]
+radius = 2.489181
+
+[node name="Balloon" type="RigidBody3D"]
+collision_layer = 8
+collision_mask = 12
+mass = 0.5
+physics_material_override = SubResource("PhysicsMaterial_o0te0")
+gravity_scale = -2.0
+linear_damp = 1.0
+script = ExtResource("1_o0te0")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.050337553, 0)
+offset = Vector2(0, 12.065)
+pixel_size = 0.2
+billboard = 2
+texture_filter = 0
+texture = ExtResource("1_jqtd5")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_784ay")
+}
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4640632, 0)
+shape = SubResource("SphereShape3D_2c2u2")
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

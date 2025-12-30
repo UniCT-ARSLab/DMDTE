@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=3 uid="uid://cdlmgj0r6fqm0"]
+
+[ext_resource type="Script" uid="uid://brik66cacud45" path="res://scripts/framework/RAI/DigitalGhost.gd" id="1_21gnr"]
+[ext_resource type="Script" uid="uid://djs832slae7dd" path="res://scripts/framework/RAI/DTPPeer.gd" id="2_88x8r"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_qljvm"]
+properties/0/path = NodePath("../Model/red:visible")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath("../Model/yellow:visible")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath("../Model/green:visible")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+
+[node name="GenericDigitalTwin" type="Node"]
+
+[node name="Model" type="CharacterBody3D" parent="."]
+
+[node name="Ghost" type="Node3D" parent="."]
+script = ExtResource("1_21gnr")
+metadata/_custom_type_script = "uid://brik66cacud45"
+
+[node name="DTPPeer" type="Node" parent="."]
+script = ExtResource("2_88x8r")
+metadata/_custom_type_script = "uid://djs832slae7dd"
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+root_path = NodePath("../DTPPeer")
+replication_config = SubResource("SceneReplicationConfig_qljvm")
+
+[node name="Controls" type="Node" parent="."]

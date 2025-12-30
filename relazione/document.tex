@@ -1,0 +1,82 @@
+\documentclass[12pt,a4paper,openany,oneside]{book}
+\nocite{*}
+
+
+\usepackage[italian]{babel}
+\usepackage[numbers]{natbib}
+\usepackage{url}
+\usepackage[hidelinks]{hyperref}
+\usepackage{wrapfig}
+%\usepackage[latin1]{inputenc} %Windows
+\usepackage[utf8]{inputenc} %Linux
+%\usepackage[applemac]{inputenc} %Mac
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage[font=small,labelfont=bf,tableposition=top]{caption}
+ 
+\usepackage{listings}
+\usepackage{xcolor} % Optional: for coloring code
+\definecolor{amber}{RGB}{255,191,00}
+
+  \usepackage{courier}
+ \lstset{
+         language=C++,
+         basicstyle=\footnotesize\ttfamily,
+         numbers=left,           
+         numberstyle=\tiny,       
+         numbersep=5pt,        
+         tabsize=5,                 
+         extendedchars=true,         
+         breaklines=true,
+         keywordstyle=\textbf,           
+         stringstyle=\color{black}\ttfamily,
+         showspaces=false,       
+         showtabs=false,           
+         xleftmargin=17pt,
+         framexleftmargin=17pt,
+         framexrightmargin=5pt,
+         framexbottommargin=4pt,
+         showstringspaces=false          
+ }
+ \linespread{1.23456789} % equivalente a 1.5 linee
+ \addto\captionsitalian{%
+ 	\renewcommand{\lstlistingname}{Codice}}
+
+\setcounter{tocdepth}{3} % fa apparire le subsubsection nell'indice
+\setcounter{secnumdepth}{3} % e le numera
+
+
+\usepackage{amsmath}
+
+
+\usepackage{framed}
+
+\begin{document}
+
+%Inserisce qui il frontespizio
+\input{parts/frontespizio} %<- richiama il file "parts/titlepage.tex" che contiene il frontespizio
+
+\bibliographystyle{unsrtnat}
+\title{Sviluppo e progettazione di un framework per il Digital Twin multi-agente distribuito}
+\author{Marco Spampinato}
+
+%Inserisce qui l'abstract
+\input{parts/abstract}
+
+%Genera l'indice
+\tableofcontents
+
+\input{parts/capitolo1} %<- richiama il file "parts/capitolo1.tex" che contiene il primo capitolo
+\input{parts/capitolo2} %<- richiama il file "parts/capitolo2.tex" che contiene il primo capitolo
+\input{parts/capitolo3} %<- richiama il file "parts/capitolo3.tex" che contiene il primo capitolo
+\input{parts/capitolo4} %<- richiama il file "parts/capitolo4.tex" che contiene il primo capitolo
+\input{parts/capitolo5} %<- richiama il file "parts/capitolo5.tex" che contiene il primo capitolo
+%Si consiglia di creare un nuovo file per ogni capitolo
+
+\input{parts/conclusione} %<- richiama il file "parts/conclusione.tex" che contiene la conclusione
+
+%Inserisce la bibliografia
+\newpage
+\addcontentsline{toc}{chapter}{Bibliografia}
+\bibliography{bibliography}
+\end{document}

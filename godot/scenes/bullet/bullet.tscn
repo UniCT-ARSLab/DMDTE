@@ -1,0 +1,58 @@
+[gd_scene load_steps=7 format=3 uid="uid://c4a2ta2qr3lsq"]
+
+[ext_resource type="Script" uid="uid://cfqgcfu0bn31j" path="res://scenes/bullet/bullet.gd" id="1_7c8un"]
+[ext_resource type="PackedScene" uid="uid://b3lfr7ciwk5fk" path="res://assets/bullet/capybullet.glb" id="2_83itf"]
+[ext_resource type="Texture2D" uid="uid://d3owpcajb7f47" path="res://assets/bullet/capybullet_color.png" id="3_c6pnf"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0vdx3"]
+resource_name = "Material.001"
+cull_mode = 2
+albedo_texture = ExtResource("3_c6pnf")
+emission_enabled = true
+emission_energy_multiplier = 8.16
+emission_texture = ExtResource("3_c6pnf")
+backlight = Color(1, 1, 1, 1)
+grow_amount = 1.612
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_83itf"]
+height = 1.7126465
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_7c8un"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+
+[node name="Bullet" type="Node3D"]
+script = ExtResource("1_7c8un")
+initial_velocity = 50.0
+max_distance = 150.0
+gravity_scale = 2.0
+max_time = 60.0
+
+[node name="capybullet" parent="." instance=ExtResource("2_83itf")]
+transform = Transform3D(-0.5, 0, -4.371139e-08, 0, 0.5, 0, 4.371139e-08, 0, -0.5, 0, 0, 0)
+
+[node name="Bullet" parent="capybullet" index="0"]
+surface_material_override/0 = SubResource("StandardMaterial3D_0vdx3")
+
+[node name="Area3D" type="Area3D" parent="."]
+collision_layer = 2
+collision_mask = 5
+priority = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, -5.607992e-09, -0.1282959)
+shape = SubResource("CapsuleShape3D_83itf")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_7c8un")
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="body_shape_entered" from="Area3D" to="." method="_on_area_3d_body_shape_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+
+[editable path="capybullet"]

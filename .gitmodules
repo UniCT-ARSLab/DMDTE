@@ -1,0 +1,3 @@
+[submodule "alvik/lib/enet"]
+	path = alvik/lib/enet
+	url = https://github.com/marcospampi/enet

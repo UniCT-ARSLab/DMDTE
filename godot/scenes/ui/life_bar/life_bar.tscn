@@ -1,0 +1,118 @@
+[gd_scene load_steps=8 format=3 uid="uid://clvnv7tlc6sf6"]
+
+[ext_resource type="Texture2D" uid="uid://hmh1a62cy8ox" path="res://assets/misc/balloons/red.png" id="1_8barr"]
+[ext_resource type="Script" uid="uid://bl86y2l1jwy3o" path="res://scenes/ui/life_bar/life_bar.gd" id="1_nam2t"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_nam2t"]
+bg_color = Color(0, 0.41568628, 0.83137256, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="LabelSettings" id="LabelSettings_j33r8"]
+font_size = 8
+
+[sub_resource type="FontVariation" id="FontVariation_usv1l"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cniga"]
+bg_color = Color(0, 0, 0, 0.42745098)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+anti_aliasing = false
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fsjm8"]
+bg_color = Color(0, 0.71419674, 0.42583725, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+anti_aliasing = false
+
+[node name="LifeBar" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_nam2t")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_nam2t")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -81.0
+offset_top = -20.0
+offset_right = 81.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/HBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+text = "Player 9"
+uppercase = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="TextureRect" type="TextureRect" parent="Panel/VBoxContainer/HBoxContainer/HBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("1_8barr")
+
+[node name="TextureRect2" type="TextureRect" parent="Panel/VBoxContainer/HBoxContainer/HBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("1_8barr")
+
+[node name="TextureRect3" type="TextureRect" parent="Panel/VBoxContainer/HBoxContainer/HBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+texture = ExtResource("1_8barr")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Panel/VBoxContainer"]
+custom_minimum_size = Vector2(0, 2.975)
+layout_mode = 2
+size_flags_vertical = 4
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/HBoxContainer2"]
+texture_filter = 1
+layout_mode = 2
+text = "Battery"
+label_settings = SubResource("LabelSettings_j33r8")
+uppercase = true
+
+[node name="ProgressBar" type="ProgressBar" parent="Panel/VBoxContainer/HBoxContainer2"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_fonts/font = SubResource("FontVariation_usv1l")
+theme_override_font_sizes/font_size = 8
+theme_override_styles/background = SubResource("StyleBoxFlat_cniga")
+theme_override_styles/fill = SubResource("StyleBoxFlat_fsjm8")
+value = 50.0

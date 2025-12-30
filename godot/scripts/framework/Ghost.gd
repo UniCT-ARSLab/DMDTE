@@ -1,0 +1,1 @@
+class_name DigitalShadow extends Node3D

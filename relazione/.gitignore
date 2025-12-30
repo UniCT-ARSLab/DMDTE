@@ -1,0 +1,26 @@
+/document.aux
+/document.fdb_latexmk
+/document.log
+/document.fls
+
+# THAT'S DISGUSTING
+*.aux 
+*.bit 
+*.blg 
+*.bbl 
+*.lof 
+*.log 
+*.lot 
+*.glo 
+*.glx 
+*.gxg 
+*.gxs 
+*.idx 
+*.ilg 
+*.ind 
+*.out 
+*.url 
+*.svn 
+*.toc
+*.dvi
+*.synctex.gz

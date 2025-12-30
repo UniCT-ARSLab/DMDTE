@@ -1,0 +1,41 @@
+[gd_scene load_steps=3 format=3 uid="uid://dvetq051e0bec"]
+
+[ext_resource type="Script" uid="uid://bnwfpbnwqw83q" path="res://scenes/ui/debug_table.gd" id="1_ed6bn"]
+[ext_resource type="PackedScene" uid="uid://b4o7ugs2xy5hm" path="res://scenes/ui/template.tscn" id="2_wgwcg"]
+
+[node name="DebugTable" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 479.0
+offset_right = 479.0
+offset_bottom = 23.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ed6bn")
+template = ExtResource("2_wgwcg")
+
+[node name="Window" type="Window" parent="."]
+oversampling_override = 1.0
+title = "Table"
+position = Vector2i(32, 48)
+size = Vector2i(480, 320)
+visible = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Window"]
+offset_right = 480.0
+offset_bottom = 320.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = -447.0
+offset_top = 23.0
+offset_right = -265.0
+offset_bottom = 54.0
+action_mode = 0
+keep_pressed_outside = true
+text = "TOGGLE DEBUG TABLE"
+
+[connection signal="close_requested" from="Window" to="." method="toggle_debug_window"]
+[connection signal="pressed" from="Button" to="." method="toggle_debug_window"]
