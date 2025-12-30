@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Digital Twin Framework"
-run/main_scene="uid://cbu7o78dasu3t"
+run/main_scene="uid://dtkjdm2eju73j"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
