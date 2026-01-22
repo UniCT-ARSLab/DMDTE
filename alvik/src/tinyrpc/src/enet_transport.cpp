@@ -1,19 +1,7 @@
-#include "tinyrpc.h"
-#include <atomic>
-
-#include <memory>
-#include <mutex>
-#include <string_view>
 #include <enet/enet.h>
-
-
-using namespace tinyrpc;
-enum {
-    PROTO_RELIABLE_CHANNEL = 0,
-    PROTO_UNRELIABLE_CHANNEL = 1,
-    PROTO_NUM_CHANNELS
-};
-
+#include <tinyrpc/tinyrpc.h>
+#include <tinyrpc/enet_transport.h>
+namespace tinyrpc {
 
 static std::atomic_size_t instances_using_enet = 0;
 bool enet_use() {
@@ -25,7 +13,6 @@ bool enet_use() {
     instances_using_enet++;
     return true;
 }
-
 void enet_unuse() {
     instances_using_enet--;
     if ( instances_using_enet == 0 ) {
@@ -33,19 +20,17 @@ void enet_unuse() {
     }
 }
 
-
-struct ClientAbstraction::Impl {
-    ClientAbstraction &interface;
-    std::recursive_mutex mutex;
-    std::atomic_bool is_connected{false};
+struct EnetTransport::Impl {
+    EnetTransport &interface;
+    std::bool is_connected{false};
 
     ENetHost *host;
     ENetPeer *peer;
     ENetAddress addr;
-    u32 peer_id;
+    ushort peer_id;
 
 
-    Impl(ClientAbstraction& interface): interface(interface) {}
+    Impl(EnetTransport& interface): interface(interface) {}
     ~Impl() {
         if ( host ) {
             enet_host_destroy(host);
@@ -53,10 +38,11 @@ struct ClientAbstraction::Impl {
         }
     }
 
-    void _try_connect() {
+		void try_connect() {
         peer = enet_host_connect(host, &addr, 2, peer_id);
-    }
-    bool begin(std::string_view hostname, u16 port) {
+		}
+
+    bool begin(const char* hostname, ushort port) {
         if ( !enet_use() ) return false;
 
         enet_address_set_host(&addr, hostname.data());
@@ -68,51 +54,61 @@ struct ClientAbstraction::Impl {
 
         peer_id = interface.generate_unique_id();
 
-        _try_connect();
+				try_connect();
 
         return true;
     }
 
-    void service() {
-        std::lock_guard lk(mutex);
-        enet_service();
-    }
-
-    void enet_service() {
+    void service(std::function<void(const TransportEvent&)> eventFn) {
         ENetEvent event;
+				TransportEvent transportEvent;
         while ( enet_host_service(host,&event,0) > 0 ) {
             switch (event.type) {
                 case ENET_EVENT_TYPE_NONE: return;
                 case ENET_EVENT_TYPE_CONNECT: {
                     is_connected = true;
-                    interface.on_connect();
+                    transportEvent = TransportEvent {
+											.type = TransportEvent::EventConnected,
+											.data = nullptr,
+											.dat_size = 0
+										};
+										eventFn(transportEvent);
+
                     break;
                 }
                 case ENET_EVENT_TYPE_DISCONNECT: {
-                    is_connected = false;
-                    interface.on_disconnect();
+                    is_connected = true;
+                    transportEvent = TransportEvent {
+											.type = TransportEvent::EventDisconnected,
+											.data = nullptr,
+											.dat_size = 0
+										};
+										eventFn(transportEvent);
 
-                    _try_connect();
+                    try_connect();
                     break;
                 }
                 case ENET_EVENT_TYPE_RECEIVE: {
-
-                    auto data = event.packet->data;
-                    auto length = event.packet->dataLength;
-                    interface.on_message(data, length);
+ 										transportEvent = TransportEvent {
+											.type = TransportEvent::EventMessage,
+											.data = event.packet->data,
+											.dat_size = event.packet->dataLength
+										};
+										eventFn(transportEvent);
                     enet_packet_destroy(event.packet);
+
+										break;
                 }
 
             }
         }
     }
-    void send_message(const u8* data, u32 size, bool reliable = false) {
+    void send_message(const uint8_t* data, ushort size, bool reliable = false) {
 
-        std::lock_guard lk(mutex);
 
-        u32 flags = ENET_PACKET_FLAG_NO_ALLOCATE;
+        ushort flags = ENET_PACKET_FLAG_NO_ALLOCATE;
         if ( reliable ) flags |= ENET_PACKET_FLAG_RELIABLE;
-        u32 channel = reliable
+        ushort channel = reliable
             ? PROTO_RELIABLE_CHANNEL
             : PROTO_UNRELIABLE_CHANNEL;
 
@@ -122,25 +118,24 @@ struct ClientAbstraction::Impl {
     }
 };
 
-bool ClientAbstraction::begin(std::string_view hostname, u16 port) {
+
+bool EnetTransport::begin(const char* hostname, ushort port) {
     return impl->begin(hostname, port);
 }
 
-void ClientAbstraction::send_message(const u8* data, u32 size, bool reliable) {
+void EnetTransport::send_message(const uint8_t* data, uint size, bool reliable) {
     impl->send_message(data, size, reliable);
 }
-void ClientAbstraction::service() {
-    impl->service();
+void EnetTransport::service(std::function<void(const TransportEvent&)> eventFn) {
+    impl->service(eventFn);
 }
-bool ClientAbstraction::is_connected() const {
+bool EnetTransport::is_connected() const {
     return impl->is_connected;
 }
-int ClientAbstraction::generate_unique_id() const {
-    std::srand(std::time(nullptr));
-    return rand();
-}
 
-ClientAbstraction::ClientAbstraction() {
+EnetTransport::EnetTransport() {
     impl = std::make_unique<Impl>(*this);
 };
-ClientAbstraction::~ClientAbstraction() = default;
+EnetTransport::~EnetTransport() = default;
+
+}
