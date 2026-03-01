@@ -76,6 +76,8 @@ struct UDSTransport::Impl {
 UDSTransport::UDSTransport(std::string_view path) {
 	impl = std::make_unique<Impl>(*this, path);
 }
+
+UDSTransport::~UDSTransport() {}
 size_t UDSTransport::send_message(
     const std::uint8_t *pkt, const size_t size,
     TransportQuality transport_quality) {

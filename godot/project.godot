@@ -8,11 +8,15 @@
 
 config_version=5
 
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
+
 [application]
 
 config/name="Digital Twin Framework"
 run/main_scene="uid://dg8revfpg5um5"
-config/features=PackedStringArray("4.5", "Forward Plus")
+config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
 [autoload]
@@ -20,7 +24,7 @@ config/icon="res://icon.svg"
 Globals="*res://autoloads/Globals.gd"
 CmdArgs="*res://scripts/cmdargs.gd"
 LoaderScript="*res://autoloads/LoaderScript.gd"
-PhantomCameraManager="*res://addons/phantom_camera/scripts/managers/phantom_camera_manager.gd"
+PhantomCameraManager="*uid://duq6jhf6unyis"
 
 [debug_draw_3d]
 
@@ -28,7 +32,7 @@ settings/addon_root_folder="res://addons/debug_draw_3d"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/phantom_camera/plugin.cfg")
+enabled=PackedStringArray("res://addons/dmdte/plugin.cfg", "res://addons/phantom_camera/plugin.cfg")
 
 [global_group]
 

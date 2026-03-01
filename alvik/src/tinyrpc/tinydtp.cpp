@@ -36,6 +36,7 @@ void TinyDTP::dispatch(std::uint32_t action, const std::uint8_t *data,
   message->content[0].action.action = action;
   action_buffer.insert(action_buffer.end(), data, data + std::min(data_len, max_data_len));
   
+  message->size = action_buffer.size();
   transport->send_message(action_buffer.data(), action_buffer.size(), TransportQuality::Reliable);
   
 }
@@ -71,6 +72,7 @@ void TinyDTP::dispose_backing_data() {
     using namespace internals;
     auto as_message = reinterpret_cast<internals::Message*>(data.data());
     as_message->msgty = MessageType::Data;
+    as_message->size = std::uint16_t(data.size());
     as_message->content[0].data.count = std::uint8_t(fields_count);
     transport->send_message(data.data(), data.size(), transport_quality);
   }
@@ -149,10 +151,12 @@ void TinyDTP::dispose_backing_data() {
     const auto size = sizeof(Message) + sizeof(MessageHello);
     std::uint8_t buf[size];
     auto as_message = reinterpret_cast<Message *>(buf);
-
+    
     std::memcpy(as_message->content->hello.uuid, uuid.data(), uuid.size());
     std::strncpy(as_message->content->hello.name, name, sizeof(name)-1);
-       
+    
+    as_message->size = size;
+    
     transport->send_message(buf, size, TransportQuality::Reliable);
   }
   void TinyDTP::bind_transport(Transport *transport) {

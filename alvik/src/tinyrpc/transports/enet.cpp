@@ -83,6 +83,9 @@ struct ENetTransport::Impl {
     }
   } 
   size_t send_message(const std::uint8_t *pkt, const size_t size, TransportQuality transport_quality) {
+		
+		if (!connected) return 0;
+		
 		int channel = 0;
 		std::uint32_t flags = 0;
     if ( (transport_quality & TransportQuality::Reliable) != TransportQuality::None ) {
@@ -93,13 +96,15 @@ struct ENetTransport::Impl {
    	auto packet = enet_packet_create(pkt, size, flags);
     enet_peer_send(peer, channel, packet);
     enet_host_flush(host);
-		return 0;
+		return size;
   };
 };
 
 ENetTransport::ENetTransport(std::string_view hostname, std::uint16_t port) {
   impl = std::make_unique<Impl>(*this, hostname, port);
-}
+}	
+ENetTransport::~ENetTransport() {}
+
 size_t ENetTransport::send_message(const std::uint8_t *pkt, const size_t size,
                                    TransportQuality transport_quality) {
   return impl->send_message(pkt, size, transport_quality);

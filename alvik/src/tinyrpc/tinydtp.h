@@ -7,9 +7,26 @@
 #include <unordered_map>
 #include <vector>
 #include <mutex>
+#include <algorithm>
 #pragma once
 namespace tinydtp {
 
+namespace utils {
+  constexpr std::array<std::uint8_t, 16> uuid_to_bytes(std::string_view uuid) {
+    std::array<std::uint8_t, 16> result;
+    
+    auto result_it = result.begin();
+    for ( auto it = uuid.begin(); it != uuid.end(); it+=2) {
+      std::string hex_str;
+      if (*it == '-') it++;
+      hex_str.push_back(*it);
+      if (*it == '-') it++;
+      hex_str.push_back(*it);
+      (*result_it++) = stoi(hex_str, nullptr, 16);
+    }
+    return result;
+  };
+}
 
 namespace internals {
 template <class T>
@@ -44,6 +61,7 @@ struct MessageAction {
   std::uint8_t data[];
 };
 struct Message {
+  std::uint16_t size;
   MessageType msgty;
   union {
     MessagePing ping;
@@ -52,7 +70,7 @@ struct Message {
     MessageAction action;
   } content[];
 };
-static_assert(sizeof(Message) == sizeof(MessageType));
+// static_assert(sizeof(Message) == sizeof(MessageType));
 
 #pragma pack(pop)
 } // namespace internals
@@ -175,7 +193,7 @@ public:
     std::lock_guard lock(properties_lock);
     const auto &pdata = this->props.at(prop.index);
     T retval{};
-    std::memcpy(reinterpret_cast<std::uint8_t *>(&retval), pdata.backind_data(),
+    std::memcpy(reinterpret_cast<std::uint8_t *>(&retval), pdata.backing_data,
                 sizeof(T));
 
     return retval;
