@@ -1,0 +1,22 @@
+#include "../tinydtp.h"
+#pragma once
+namespace tinydtp {
+/**
+ * Implementation of ENet transport for tinydtp
+ */
+class ENetTransport : public Transport {
+public:
+	ENetTransport(std::string_view hostname, std::uint16_t port);
+	size_t get_maximum_packet_size() const override { return 1392; };
+  size_t send_message(const std::uint8_t *pkt, const size_t size, TransportQuality transport_quality = TransportQuality::None ) override;
+  size_t service() override;
+
+  virtual bool is_connected() const override;
+	
+private:
+	struct Impl;
+	friend class Impl;
+	std::unique_ptr<Impl> impl;
+};
+
+}
