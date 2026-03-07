@@ -1,4 +1,4 @@
-[gd_scene load_steps=32 format=3 uid="uid://cbu7o78dasu3t"]
+[gd_scene format=3 uid="uid://cbu7o78dasu3t"]
 
 [ext_resource type="Script" uid="uid://c6y8863lw3j0n" path="res://views/world/world.gd" id="1_q8fw4"]
 [ext_resource type="PackedScene" uid="uid://b81ldut1o5vue" path="res://scenes/game_manager/game_manager.tscn" id="2_64q5c"]
@@ -82,19 +82,19 @@ points = PackedVector3Array(-15.238096, -7.238095, -1.2380953, 15.238096, 7.0476
 [sub_resource type="LabelSettings" id="LabelSettings_baui5"]
 font_size = 24
 
-[node name="World" type="Node3D"]
+[node name="World" type="Node3D" unique_id=1831327681]
 script = ExtResource("1_q8fw4")
 
-[node name="GameManager" parent="." instance=ExtResource("2_64q5c")]
+[node name="GameManager" parent="." unique_id=1628079867 instance=ExtResource("2_64q5c")]
 
-[node name="MatchManager" type="Node" parent="GameManager"]
+[node name="MatchManager" type="Node" parent="GameManager" unique_id=94486199]
 script = ExtResource("3_v8yw0")
 
-[node name="Timer" type="Timer" parent="GameManager/MatchManager"]
+[node name="Timer" type="Timer" parent="GameManager/MatchManager" unique_id=623544282]
 
-[node name="Network" type="Node" parent="."]
+[node name="Network" type="Node" parent="." unique_id=657112063]
 
-[node name="DTPNetwork" type="Node" parent="Network" node_paths=PackedStringArray("spawn_path")]
+[node name="DTPNetwork" type="Node" parent="Network" unique_id=1664125655 node_paths=PackedStringArray("spawn_path")]
 script = ExtResource("4_5y0fw")
 digitalTwins = Dictionary[String, PackedScene]({
 "alvik": ExtResource("5_ul0gy"),
@@ -102,140 +102,140 @@ digitalTwins = Dictionary[String, PackedScene]({
 })
 spawn_path = NodePath("../../Environment/NavigationRegion3D/Twins")
 
-[node name="MultiplayerNetwork" type="Node" parent="Network" node_paths=PackedStringArray("dtp_network", "multiplayer_spawner", "twins")]
+[node name="MultiplayerNetwork" type="Node" parent="Network" unique_id=1791240701 node_paths=PackedStringArray("dtp_network", "multiplayer_spawner", "twins")]
 script = ExtResource("7_ns56h")
 dtp_network = NodePath("../DTPNetwork")
 multiplayer_spawner = NodePath("MultiplayerSpawner")
 twins = NodePath("../../Environment/NavigationRegion3D/Twins")
 metadata/_custom_type_script = "uid://bjofuxuj20ie3"
 
-[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="Network/MultiplayerNetwork"]
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="Network/MultiplayerNetwork" unique_id=2141831305]
 _spawnable_scenes = PackedStringArray("uid://c1g2srcscygm6", "uid://cohevf6dfberv")
 spawn_path = NodePath("../../../Environment/NavigationRegion3D/Twins")
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=21250777]
 environment = SubResource("Environment_dn6n2")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1450796]
 transform = Transform3D(-0.74779814, -0.6238866, 0.22707616, 0, 0.34202018, 0.9396927, -0.66392624, 0.7027004, -0.25576204, 0, 0, 0)
 shadow_enabled = true
 directional_shadow_max_distance = 500.0
 
-[node name="Camera3D" type="Camera3D" parent="."]
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1976626923]
 transform = Transform3D(1, 0, 0, 0, 0.70710677, 0.70710677, 0, -0.70710677, 0.70710677, 0, 124.269, 141.28)
 
-[node name="PhantomCameraHost" type="Node" parent="Camera3D"]
+[node name="PhantomCameraHost" type="Node" parent="Camera3D" unique_id=330013306]
 process_priority = 300
 process_physics_priority = 300
 script = ExtResource("8_t1ul8")
 metadata/_custom_type_script = "uid://bd046eokvcnu2"
 
-[node name="PhantomCamera3D" type="Node3D" parent="."]
+[node name="PhantomCamera3D" type="Node3D" parent="." unique_id=1823842004]
 transform = Transform3D(1, 0, 0, 0, 0.70710677, 0.70710677, 0, -0.70710677, 0.70710677, 0, 124.269, 141.28)
 script = ExtResource("9_k88oa")
 priority = 2
 tween_resource = SubResource("Resource_bn06d")
 camera_3d_resource = SubResource("Resource_05rt4")
 
-[node name="Environment" type="Node3D" parent="."]
+[node name="Environment" type="Node3D" parent="." unique_id=657977279]
 
-[node name="SpawnZones" type="Node" parent="Environment"]
+[node name="SpawnZones" type="Node" parent="Environment" unique_id=451925553]
 
-[node name="SpawnerZone" parent="Environment/SpawnZones" instance=ExtResource("12_iwo5a")]
+[node name="SpawnerZone" parent="Environment/SpawnZones" unique_id=465623025 instance=ExtResource("12_iwo5a")]
 transform = Transform3D(1, 0, 1.7484555e-07, 0, 1, 0, -1.7484555e-07, 0, 1, -74, 0.1, 49)
 player_number = 1
 
-[node name="SpawnerZone2" parent="Environment/SpawnZones" instance=ExtResource("12_iwo5a")]
+[node name="SpawnerZone2" parent="Environment/SpawnZones" unique_id=608980499 instance=ExtResource("12_iwo5a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 74, 0.1, 49)
 player_number = 3
 
-[node name="SpawnerZone3" parent="Environment/SpawnZones" instance=ExtResource("12_iwo5a")]
+[node name="SpawnerZone3" parent="Environment/SpawnZones" unique_id=2054304210 instance=ExtResource("12_iwo5a")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, -74, 0.1, -49)
 player_number = 4
 
-[node name="SpawnerZone4" parent="Environment/SpawnZones" instance=ExtResource("12_iwo5a")]
+[node name="SpawnerZone4" parent="Environment/SpawnZones" unique_id=1938367677 instance=ExtResource("12_iwo5a")]
 transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 74, 0.1, -49)
 player_number = 2
 
-[node name="NavigationRegion3D" type="NavigationRegion3D" parent="Environment" groups=["Clickable"]]
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="Environment" unique_id=1420853535 groups=["Clickable"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.009147339, 0, -0.0030491066)
 navigation_mesh = SubResource("NavigationMesh_dxshu")
 
-[node name="Arena" type="StaticBody3D" parent="Environment/NavigationRegion3D"]
+[node name="Arena" type="StaticBody3D" parent="Environment/NavigationRegion3D" unique_id=427140553]
 collision_layer = 3
 
-[node name="ArenaGeometry" type="MeshInstance3D" parent="Environment/NavigationRegion3D/Arena"]
+[node name="ArenaGeometry" type="MeshInstance3D" parent="Environment/NavigationRegion3D/Arena" unique_id=997695106]
 material_override = SubResource("StandardMaterial3D_wxupg")
 mesh = SubResource("QuadMesh_7pkxe")
 skeleton = NodePath("../../../..")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/NavigationRegion3D/Arena"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/NavigationRegion3D/Arena" unique_id=1282690059]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.006874, 0)
 shape = SubResource("ConvexPolygonShape3D_q8fw4")
 
-[node name="Twins" type="Node" parent="Environment/NavigationRegion3D"]
+[node name="Twins" type="Node" parent="Environment/NavigationRegion3D" unique_id=1055149669]
 
-[node name="Bullets" type="Node" parent="Environment/NavigationRegion3D"]
+[node name="Bullets" type="Node" parent="Environment/NavigationRegion3D" unique_id=665317737]
 
-[node name="wall" type="StaticBody3D" parent="Environment"]
+[node name="wall" type="StaticBody3D" parent="Environment" unique_id=1178020372]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5092468, -60)
 
-[node name="wall_mesh" type="MeshInstance3D" parent="Environment/wall"]
+[node name="wall_mesh" type="MeshInstance3D" parent="Environment/wall" unique_id=1531746140]
 mesh = SubResource("BoxMesh_64q5c")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/wall"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/wall" unique_id=748641107]
 shape = SubResource("ConvexPolygonShape3D_v8yw0")
 
-[node name="wall2" type="StaticBody3D" parent="Environment"]
+[node name="wall2" type="StaticBody3D" parent="Environment" unique_id=1363103040]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5092468, 60)
 
-[node name="wall_mesh" type="MeshInstance3D" parent="Environment/wall2"]
+[node name="wall_mesh" type="MeshInstance3D" parent="Environment/wall2" unique_id=435557005]
 mesh = SubResource("BoxMesh_64q5c")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/wall2"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/wall2" unique_id=1479024556]
 shape = SubResource("ConvexPolygonShape3D_v8yw0")
 
-[node name="wall3" type="StaticBody3D" parent="Environment"]
+[node name="wall3" type="StaticBody3D" parent="Environment" unique_id=1295008739]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -85, 3.509, 0)
 
-[node name="wall_mesh" type="MeshInstance3D" parent="Environment/wall3"]
+[node name="wall_mesh" type="MeshInstance3D" parent="Environment/wall3" unique_id=592872896]
 mesh = SubResource("BoxMesh_5y0fw")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/wall3"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/wall3" unique_id=416067274]
 shape = SubResource("ConvexPolygonShape3D_ul0gy")
 
-[node name="wall4" type="StaticBody3D" parent="Environment"]
+[node name="wall4" type="StaticBody3D" parent="Environment" unique_id=1365524959]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 85, 3.509, 0)
 
-[node name="wall_mesh" type="MeshInstance3D" parent="Environment/wall4"]
+[node name="wall_mesh" type="MeshInstance3D" parent="Environment/wall4" unique_id=1067761749]
 mesh = SubResource("BoxMesh_5y0fw")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/wall4"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/wall4" unique_id=993511782]
 shape = SubResource("ConvexPolygonShape3D_ul0gy")
 
-[node name="wall6" type="StaticBody3D" parent="Environment"]
+[node name="wall6" type="StaticBody3D" parent="Environment" unique_id=650609064]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.509, 0)
 
-[node name="wall_mesh" type="MeshInstance3D" parent="Environment/wall6"]
+[node name="wall_mesh" type="MeshInstance3D" parent="Environment/wall6" unique_id=1318015346]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5000002, 0)
 mesh = SubResource("BoxMesh_q8fw4")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/wall6"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/wall6" unique_id=1313990898]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5000002, 0)
 shape = SubResource("ConvexPolygonShape3D_64q5c")
 
-[node name="wall7" type="StaticBody3D" parent="Environment"]
+[node name="wall7" type="StaticBody3D" parent="Environment" unique_id=611380639]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 3.509, 0)
 
-[node name="wall_mesh" type="MeshInstance3D" parent="Environment/wall7"]
+[node name="wall_mesh" type="MeshInstance3D" parent="Environment/wall7" unique_id=1911234538]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5000002, 0)
 mesh = SubResource("BoxMesh_q8fw4")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/wall7"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/wall7" unique_id=1291988575]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5000002, 0)
 shape = SubResource("ConvexPolygonShape3D_64q5c")
 
-[node name="StartGame" type="Button" parent="."]
+[node name="StartGame" type="Button" parent="." unique_id=1200250789]
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -250,9 +250,9 @@ grow_vertical = 0
 size_flags_horizontal = 4
 text = "Start game"
 
-[node name="UI" type="CanvasLayer" parent="."]
+[node name="UI" type="CanvasLayer" parent="." unique_id=956889990]
 
-[node name="LifeContainer" type="Control" parent="UI"]
+[node name="LifeContainer" type="Control" parent="UI" unique_id=445725990]
 layout_mode = 3
 anchor_left = 0.049000002
 anchor_right = 0.95100003
@@ -263,7 +263,7 @@ offset_bottom = 71.0
 grow_horizontal = 2
 size_flags_horizontal = 3
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/LifeContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="UI/LifeContainer" unique_id=1240140492]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -273,22 +273,22 @@ grow_vertical = 2
 theme_override_constants/separation = 24
 alignment = 1
 
-[node name="LifeBar" parent="UI/LifeContainer/HBoxContainer" instance=ExtResource("14_guecm")]
+[node name="LifeBar" parent="UI/LifeContainer/HBoxContainer" unique_id=2021359243 instance=ExtResource("14_guecm")]
 layout_mode = 2
 
-[node name="LifeBar2" parent="UI/LifeContainer/HBoxContainer" instance=ExtResource("14_guecm")]
+[node name="LifeBar2" parent="UI/LifeContainer/HBoxContainer" unique_id=1030735174 instance=ExtResource("14_guecm")]
 layout_mode = 2
 player_number = 1
 
-[node name="LifeBar3" parent="UI/LifeContainer/HBoxContainer" instance=ExtResource("14_guecm")]
+[node name="LifeBar3" parent="UI/LifeContainer/HBoxContainer" unique_id=365782321 instance=ExtResource("14_guecm")]
 layout_mode = 2
 player_number = 2
 
-[node name="LifeBar4" parent="UI/LifeContainer/HBoxContainer" instance=ExtResource("14_guecm")]
+[node name="LifeBar4" parent="UI/LifeContainer/HBoxContainer" unique_id=1915733786 instance=ExtResource("14_guecm")]
 layout_mode = 2
 player_number = 3
 
-[node name="GameStateLabel" type="Label" parent="UI"]
+[node name="GameStateLabel" type="Label" parent="UI" unique_id=704204598]
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0

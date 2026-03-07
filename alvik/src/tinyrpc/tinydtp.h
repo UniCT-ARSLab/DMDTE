@@ -37,7 +37,7 @@ template <class T>
 inline const std::uint8_t *as_bytes(const T *data) {
   return reinterpret_cast<const std::uint8_t *>(data);
 };
-enum class MessageType : std::uint8_t { Ping, Hello, Data, Action };
+enum class MessageType : std::uint8_t { Ping = 0, Hello, Data, Action };
 
 #pragma pack(push, 1)
 struct MessagePing {};

@@ -1,6 +1,8 @@
 # An outlet is a server that manages DTP links via a transport protocol
 class_name DTPOutlet extends Node
 
+
+@export var auto_start: bool = true
 signal peer_connected(peer: DTPPeer2)
 signal peer_disconnected(peer: DTPPeer2)
 

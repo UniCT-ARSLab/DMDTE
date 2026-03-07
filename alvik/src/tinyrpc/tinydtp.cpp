@@ -150,10 +150,11 @@ void TinyDTP::dispose_backing_data() {
     using namespace internals;
     const auto size = sizeof(Message) + sizeof(MessageHello);
     std::uint8_t buf[size];
+    std::memset(buf, 0, size);
     auto as_message = reinterpret_cast<Message *>(buf);
-    
-    std::memcpy(as_message->content->hello.uuid, uuid.data(), uuid.size());
-    std::strncpy(as_message->content->hello.name, name, sizeof(name)-1);
+      
+    // std::memcpy(&as_message->content->hello.uuid, uuid.data(), uuid.size());
+    // std::strncpy(&as_message->content->hello.name, name, sizeof(name)-1);
     
     as_message->size = size;
     

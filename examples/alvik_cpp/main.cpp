@@ -8,6 +8,7 @@
 #include "argparse.hpp"
 #include "tinydtp/tinydtp.h"
 #include "tinydtp/transports/enet.h"
+#include "tinydtp/transports/uds.h"
 
 using namespace tinydtp;
 
@@ -90,13 +91,14 @@ int main(int argc, const char **argv) {
 	const auto port = ap.get<uint16_t>("port");
 	const auto player_number =  ap.get<uint8_t>("player");
   
-  ENetTransport transport(host, port);
+  //ENetTransport transport(host, port);
+  UDSTransport transport("/home/marco/dtp.sock");
 	auto instance = AlvikRai();
   instance.finalize(&transport);
   instance.setup();
 
   auto loop = std::thread([&](){
-		const float dt = 1.0f / 60.0f;
+		const float dt = 60 / 60.0f;
 		const auto dt_seconds  = std::chrono::duration<float>(dt);
 
 		for(;;) {

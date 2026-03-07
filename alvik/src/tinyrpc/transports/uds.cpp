@@ -3,6 +3,7 @@
 #include <sys/socket.h>
 #include <sys/un.h>
 #include "uds.h"
+#include <print>
 using namespace tinydtp;
 
 struct UDSTransport::Impl {
@@ -12,14 +13,15 @@ struct UDSTransport::Impl {
 	bool connected = false;
 	struct sockaddr_un addr;
 	std::uint8_t buffer[4096];
+
 	Impl(UDSTransport &parent,std::string_view path_): parent(parent), path(path_) {
 		std::memset(&addr, 0, sizeof(struct sockaddr_un));
 		addr.sun_family = AF_UNIX;
-		std::strncpy(addr.sun_path, path.data(), sizeof(addr.sun_family)-1);
+		std::strncpy(addr.sun_path, path_.data(), sizeof(addr.sun_path)-1);
 	}
 
 	size_t service() {
-		if ( connected ) {
+		if ( !connected ) {
 			service_do_connect();
 		}
 		else {
@@ -29,10 +31,12 @@ struct UDSTransport::Impl {
 	}
 	void service_do_connect() {
 		if ( sock_fd == -1 ) {
-			sock_fd = socket(AF_UNIX, SOCK_STREAM, 0);
+			sock_fd = socket(AF_UNIX, SOCK_STREAM|SOCK_NONBLOCK,0);
+
 			if ( sock_fd == -1 ) {
 				connected = false;
-				parent.on_connection_state_change(connect);
+				// parent.on_connection_state_change(connected);
+
 				return;
 			}
 		}
@@ -43,7 +47,7 @@ struct UDSTransport::Impl {
 		else {
 			connected = true;
 		}
-		parent.on_connection_state_change(connect);
+		parent.on_connection_state_change(connected);
 
 		
 
@@ -51,10 +55,10 @@ struct UDSTransport::Impl {
 
 	void service_do_data() {
 		ssize_t size = recv(sock_fd, buffer, sizeof(buffer), 0 );
-		if ( size < 0 ) {
-			connected = false;
-			parent.on_connection_state_change(connected);
-		}
+		// if ( size < 0 ) {
+		// 	connected = false;
+		// 	parent.on_connection_state_change(connected);
+		// }
 
 		parent.on_message(buffer, size);
 	}
@@ -64,11 +68,11 @@ struct UDSTransport::Impl {
 			return 0;
 		}
 		ssize_t sent = send(sock_fd, pkt, size, MSG_NOSIGNAL);
-		if ( sent < 0 ) {
-			connected = false;
-			parent.on_connection_state_change(false);
-			return 0;
-		}
+		//if ( sent < 0 ) {
+		//	connected = false;
+		//	parent.on_connection_state_change(false);
+		//	return 0;
+		//}
 		return sent;
 	};
 };

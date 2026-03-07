@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://cdxw7cj4krr61"]
+
+[ext_resource type="Script" uid="uid://c6ev8ik1l1bbk" path="res://addons/dmdte/dtp/dtp_server.gd" id="1_ns7l7"]
+[ext_resource type="Script" uid="uid://crt522cvy2db5" path="res://addons/dmdte/dtp/uds/dtp_uds_outlet.gd" id="2_wo0s5"]
+
+[node name="TestLevel" type="Node3D" unique_id=543413134]
+
+[node name="DTPServer" type="Node" parent="." unique_id=1700471690]
+script = ExtResource("1_ns7l7")
+metadata/_custom_type_script = "uid://c6ev8ik1l1bbk"
+
+[node name="DTPUDSOutlet" type="Node" parent="DTPServer" unique_id=530999604]
+script = ExtResource("2_wo0s5")
+path = "/home/marco/dtp.sock"
+metadata/_custom_type_script = "uid://crt522cvy2db5"
