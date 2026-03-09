@@ -18,7 +18,7 @@ enum Type {
 	PACKED_INT32
 }
 
-static func sizeof(type: Type):
+static func sizeof(type: Type) -> int:
 	match type:
 		Type.INT8: return  1
 		Type.UINT8: return  1
@@ -36,6 +36,7 @@ static func sizeof(type: Type):
 		Type.PACKED_BYTES: return 1
 		Type.PACKED_FLOAT: return  4
 		Type.PACKED_INT32: return  4
+		_: return 0
 static func is_variable_length(type: Type):
 	match type:
 		Type.STRING: return true	
@@ -105,7 +106,17 @@ static func decode(data: PackedByteArray, type: Type) -> Variant:
 		return _decode_variable_length(data, type)
 	else:
 		return _decode_fixed_length(data, type)
+
+static func decode_sequence(data: PackedByteArray, types: Array[Type]) -> Array[Variant]:
+	var offset:= 0
+	var result := []
+	for type in types:
+		var size:= sizeof(type)
+		var next = decode(data.slice(offset, offset+size), type); offset+= size
+		result.push_back(next)
+	return result
 		
+
 static func _decode_fixed_length(data: PackedByteArray, type: Type) -> Variant:
 	match type:
 		Type.INT8:

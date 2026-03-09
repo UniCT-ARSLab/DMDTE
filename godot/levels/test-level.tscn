@@ -1,9 +1,15 @@
 [gd_scene format=3 uid="uid://cdxw7cj4krr61"]
 
+[ext_resource type="Script" uid="uid://jyk36dblqhbj" path="res://addons/dmdte/dtp/synchronizer/DTPReplication.gd" id="2_bk5ri"]
 [ext_resource type="Script" uid="uid://85c1tij6e6rn" path="res://addons/dmdte/dtp/synchronizer/DTPAction.gd" id="2_l60ws"]
 [ext_resource type="Script" uid="uid://dpmgtuoit7f1q" path="res://scripts/framework/RAI/DTPProperty.gd" id="3_bk5ri"]
 [ext_resource type="Script" uid="uid://8j16g65fga5w" path="res://addons/dmdte/dtp/synchronizer/DTPSynchronizerConfig.gd" id="4_1atlx"]
 [ext_resource type="Script" uid="uid://cgy7j28i6uip5" path="res://addons/dmdte/dtp/synchronizer/DTPSynchronizer.gd" id="4_l60ws"]
+
+[sub_resource type="Resource" id="Resource_dwtaq"]
+script = ExtResource("2_bk5ri")
+paths = Array[NodePath]([NodePath("../Battery:battery")])
+metadata/_custom_type_script = "uid://jyk36dblqhbj"
 
 [sub_resource type="Resource" id="Resource_83x5u"]
 script = ExtResource("3_bk5ri")
@@ -41,10 +47,26 @@ script = ExtResource("4_1atlx")
 properties = Array[ExtResource("3_bk5ri")]([SubResource("Resource_83x5u"), SubResource("Resource_l60ws"), SubResource("Resource_bk5ri"), SubResource("Resource_1atlx")])
 metadata/_custom_type_script = "uid://8j16g65fga5w"
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_l60ws"]
+
+[sub_resource type="GDScript" id="GDScript_l60ws"]
+script/source = "extends Node
+@export var battery : int = 0
+"
+
 [node name="TestLevel" type="Node3D" unique_id=543413134]
 
 [node name="DTPSynchronizer" type="Node" parent="." unique_id=980288489]
 script = ExtResource("4_l60ws")
 uuid = "7e906a46-e425-4348-ba3c-e5b66b295dda"
+replication = Dictionary[String, ExtResource("2_bk5ri")]({
+"battery": SubResource("Resource_dwtaq")
+})
 config = SubResource("Resource_ef05x")
 metadata/_custom_type_script = "uid://cgy7j28i6uip5"
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." unique_id=892422435]
+replication_config = SubResource("SceneReplicationConfig_l60ws")
+
+[node name="Battery" type="Node" parent="." unique_id=151698206]
+script = SubResource("GDScript_l60ws")

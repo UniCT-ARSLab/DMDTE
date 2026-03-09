@@ -1,5 +1,6 @@
 class_name DTPServer
 extends Node
+const UUID_META_SYMBOL = StringName("UUID_META_SYMBOL")
 
 var peers: Node
 
@@ -26,7 +27,7 @@ func process_message(outlet: DTPOutlet, handle: RefCounted, message: DTPMessage)
 func _process_hello(outlet: DTPOutlet, handle: RefCounted, message: DTPHelloMessage):
 	
 	var peer: DTPPeer2
-	handle.set_meta('uuid', message.uuid)
+	handle.set_meta(UUID_META_SYMBOL, message.uuid)
 	if not peers.has_node(message.uuid):
 		peer = DTPPeer2.new()
 		peer.name = message.uuid
@@ -42,10 +43,10 @@ func _process_hello(outlet: DTPOutlet, handle: RefCounted, message: DTPHelloMess
 	connected.emit(peer)
 		
 func _process_message(outlet: DTPOutlet, handle: RefCounted, message: DTPMessage):
-	if not handle.has_meta('uuid'): 
+	if not handle.has_meta(UUID_META_SYMBOL): 
 		push_warning("Received processable message from handle w/o UUID")
 		return
-	var uuid := handle.get_meta('uuid') as String
+	var uuid := handle.get_meta(UUID_META_SYMBOL) as String
 	var peer := peers.get_node(uuid) as DTPPeer2
 	if not peer:
 		push_error("Peer not found!")
