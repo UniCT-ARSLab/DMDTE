@@ -31,8 +31,9 @@ public:
   AlvikRai () : TinyDTP() {
   }
   
+
+
   void setup() {
-    set_name("FakeAlvik");
     set_uuid(utils::uuid_to_bytes("7e906a46-e425-4348-ba3c-e5b66b295dda"));
     //set_uuid({ 0x19,0x89,0x91,0x4b,0x19,0xde,0x4f,0xc6,0xa5,0x93,0xd6,0x65,0x29,0x0e,0x43,0x05});
     set_property(battery, 100);
@@ -56,6 +57,9 @@ public:
 
 
   protected:
+  void on_ping() override {
+    send_update_data(true);
+  }
   void on_connection_state_change(bool connected) override {
     if ( connected ) {
       std::println("Connesso! 😁");
@@ -100,12 +104,21 @@ int main(int argc, const char **argv) {
   auto loop = std::thread([&](){
 		const float dt = 60 / 60.0f;
 		const auto dt_seconds  = std::chrono::duration<float>(dt);
-
+    float seconds = 0.0f;
 		for(;;) {
 			instance.loop(dt);
-      instance.service();
 
+      if ( seconds >= 10.0f ) {
+        instance.service(true);
+        seconds = 0.0f;
+      }
+      else {
+        instance.service(false);
+      }
+
+      seconds+= dt;
 			std::this_thread::sleep_for(dt_seconds);
+
 		}
 	});
   loop.join();

@@ -1,15 +1,50 @@
 [gd_scene format=3 uid="uid://cdxw7cj4krr61"]
 
-[ext_resource type="Script" uid="uid://c6ev8ik1l1bbk" path="res://addons/dmdte/dtp/dtp_server.gd" id="1_ns7l7"]
-[ext_resource type="Script" uid="uid://crt522cvy2db5" path="res://addons/dmdte/dtp/uds/dtp_uds_outlet.gd" id="2_wo0s5"]
+[ext_resource type="Script" uid="uid://85c1tij6e6rn" path="res://addons/dmdte/dtp/synchronizer/DTPAction.gd" id="2_l60ws"]
+[ext_resource type="Script" uid="uid://dpmgtuoit7f1q" path="res://scripts/framework/RAI/DTPProperty.gd" id="3_bk5ri"]
+[ext_resource type="Script" uid="uid://8j16g65fga5w" path="res://addons/dmdte/dtp/synchronizer/DTPSynchronizerConfig.gd" id="4_1atlx"]
+[ext_resource type="Script" uid="uid://cgy7j28i6uip5" path="res://addons/dmdte/dtp/synchronizer/DTPSynchronizer.gd" id="4_l60ws"]
+
+[sub_resource type="Resource" id="Resource_83x5u"]
+script = ExtResource("3_bk5ri")
+name = "battery"
+type = 5
+input = true
+metadata/_custom_type_script = "uid://dpmgtuoit7f1q"
+
+[sub_resource type="Resource" id="Resource_l60ws"]
+script = ExtResource("3_bk5ri")
+index = 1
+name = "pose"
+type = 9
+input = true
+metadata/_custom_type_script = "uid://dpmgtuoit7f1q"
+
+[sub_resource type="Resource" id="Resource_bk5ri"]
+script = ExtResource("3_bk5ri")
+index = 2
+name = "drive_speed"
+type = 8
+input = true
+metadata/_custom_type_script = "uid://dpmgtuoit7f1q"
+
+[sub_resource type="Resource" id="Resource_1atlx"]
+script = ExtResource("3_bk5ri")
+index = 3
+name = "drive_speed_target"
+type = 8
+output = true
+metadata/_custom_type_script = "uid://dpmgtuoit7f1q"
+
+[sub_resource type="Resource" id="Resource_ef05x"]
+script = ExtResource("4_1atlx")
+properties = Array[ExtResource("3_bk5ri")]([SubResource("Resource_83x5u"), SubResource("Resource_l60ws"), SubResource("Resource_bk5ri"), SubResource("Resource_1atlx")])
+metadata/_custom_type_script = "uid://8j16g65fga5w"
 
 [node name="TestLevel" type="Node3D" unique_id=543413134]
 
-[node name="DTPServer" type="Node" parent="." unique_id=1700471690]
-script = ExtResource("1_ns7l7")
-metadata/_custom_type_script = "uid://c6ev8ik1l1bbk"
-
-[node name="DTPUDSOutlet" type="Node" parent="DTPServer" unique_id=530999604]
-script = ExtResource("2_wo0s5")
-path = "/home/marco/dtp.sock"
-metadata/_custom_type_script = "uid://crt522cvy2db5"
+[node name="DTPSynchronizer" type="Node" parent="." unique_id=980288489]
+script = ExtResource("4_l60ws")
+uuid = "7e906a46-e425-4348-ba3c-e5b66b295dda"
+config = SubResource("Resource_ef05x")
+metadata/_custom_type_script = "uid://cgy7j28i6uip5"

@@ -25,6 +25,7 @@ Globals="*res://autoloads/Globals.gd"
 CmdArgs="*res://scripts/cmdargs.gd"
 LoaderScript="*res://autoloads/LoaderScript.gd"
 PhantomCameraManager="*uid://duq6jhf6unyis"
+DTPGlobalServer="*uid://dn0fneqhpt1gv"
 
 [debug_draw_3d]
 

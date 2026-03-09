@@ -16,12 +16,12 @@ namespace utils {
     std::array<std::uint8_t, 16> result;
     
     auto result_it = result.begin();
-    for ( auto it = uuid.begin(); it != uuid.end(); it+=2) {
+    for ( auto it = uuid.begin(); it != uuid.end();) {
       std::string hex_str;
       if (*it == '-') it++;
-      hex_str.push_back(*it);
+      hex_str.push_back(*it++);
       if (*it == '-') it++;
-      hex_str.push_back(*it);
+      hex_str.push_back(*it++);
       (*result_it++) = stoi(hex_str, nullptr, 16);
     }
     return result;
@@ -43,7 +43,6 @@ enum class MessageType : std::uint8_t { Ping = 0, Hello, Data, Action };
 struct MessagePing {};
 struct MessageHello {
   std::uint8_t uuid[16];
-  char name[64];
 };
 struct MessageData {
   std::uint8_t count;
@@ -220,7 +219,12 @@ public:
    * @param connected the state of the connection
    */
   virtual void on_connection_state_change(bool connected) {}
-
+  /**
+   * Called after a ping message is received, but after a hello message is sent
+   *
+   * @param connected the state of the connection
+   */
+  virtual void on_ping() {}
   /**
    * Dispatches one action to the other DTP end.
    *
@@ -236,13 +240,6 @@ public:
    */
   void service(bool full_update = false);
 
-  
-  std::string_view get_name() const {
-    return std::string_view(name);
-  }
-  void set_name(std::string_view name) {
-    strncpy(this->name, name.data(), sizeof(this->name) - 1);
-  }
   UUID get_uuid( ) const {
     return uuid;
   }
@@ -298,7 +295,6 @@ public:
   std::vector<std::uint8_t> action_buffer;
   std::uint8_t *backing_data{nullptr};
 
-  char name[64] = "skibidi";
   UUID uuid;
 
   std::mutex properties_lock;

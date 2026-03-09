@@ -81,6 +81,7 @@ void TinyDTP::dispose_backing_data() {
    * Sends update data to the other DTP end, takes into account the transport's limit packet size!
    */
   void TinyDTP::send_update_data(bool full_update) {
+    if (!transport->is_connected()) return;
     std::lock_guard lock_props(properties_lock);
     std::lock_guard lock_buffer(message_buffer_lock);
     using namespace internals;
@@ -99,6 +100,7 @@ void TinyDTP::dispose_backing_data() {
       // only accept fields that size is within the allowed size
       if ( (next->size + field_header_size <= max_field_size) && (full_update||next->changed)) {
         props_size_queue.push(next);
+        next->changed = false;
       }
     }
     size_t field_counts = 0;
@@ -132,6 +134,7 @@ void TinyDTP::dispose_backing_data() {
     switch ( as_message->msgty ) {
       case MessageType::Ping: {
         send_hello_message();
+        on_ping();
         return;
       }
       case MessageType::Action: {
@@ -153,10 +156,11 @@ void TinyDTP::dispose_backing_data() {
     std::memset(buf, 0, size);
     auto as_message = reinterpret_cast<Message *>(buf);
       
-    // std::memcpy(&as_message->content->hello.uuid, uuid.data(), uuid.size());
-    // std::strncpy(&as_message->content->hello.name, name, sizeof(name)-1);
+    std::memcpy(as_message->content->hello.uuid, uuid.data(), uuid.size());
     
     as_message->size = size;
+    as_message->msgty = MessageType::Hello;
+    
     
     transport->send_message(buf, size, TransportQuality::Reliable);
   }

@@ -59,8 +59,9 @@ struct UDSTransport::Impl {
 		// 	connected = false;
 		// 	parent.on_connection_state_change(connected);
 		// }
-
-		parent.on_message(buffer, size);
+		if ( size > 0 ) {
+			parent.on_message(buffer, size);
+		}
 	}
 
   size_t send_message(const std::uint8_t *pkt, const size_t size) {
