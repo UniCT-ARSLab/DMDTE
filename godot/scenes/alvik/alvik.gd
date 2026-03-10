@@ -60,10 +60,17 @@ func _duplicate_material():
 
 func set_invincible(value: bool):
 	self.controllo_vita.invincible = value
+	
+func set_can_shoot(value: bool):
+	controllo_cannone.set_can_fire(value)
+	
 func set_controllable(value: bool):
 	self.controllo_cannone.enabled = value
 	self.manual_controller.enabled = value
+	set_can_shoot(false)
+	self.model.drive(0.0,0.0)
 	self.ghost.drive(0.0,0.0)
+	
 func set_home_position(home_position: Vector3):
 	self.agent_controller.home_position = home_position
 func return_to_home():

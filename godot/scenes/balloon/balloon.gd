@@ -4,12 +4,17 @@ class_name Balloon extends RigidBody3D
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var sprite_3d = $Sprite3D
 
+
+
 var initial_transform: Transform3D
 
 var start_height: float = 0
 func _ready():
 	start_height = position.y
 	initial_transform = global_transform
+	if is_multiplayer_authority():
+		sprite_3d.scale = Vector3.ONE * .8
+		set_alpha(.5)
 
 
 func _process(_delta):
@@ -24,7 +29,7 @@ func detach():
 func reset(origin: Transform3D):
 	visible = true
 	animation_player.stop()
-	sprite_3d.modulate = Color.WHITE
+	# sprite_3d.modulate = Color.WHITE
 	self.global_transform = origin * initial_transform
 	joint.node_b = get_path()
 		
@@ -33,3 +38,5 @@ func reset(origin: Transform3D):
 func _on_animation_player_animation_finished(_anim_name):
 	set_physics_process(false)
 	visible = false
+func set_alpha(value: float):
+	sprite_3d.modulate.a = clampf(value,0.0,1.0)

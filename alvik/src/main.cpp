@@ -1,4 +1,3 @@
-#include <credentials.h>
 #include <Arduino.h>
 #include <WiFi.h>
 #include "utils.h"
@@ -104,12 +103,33 @@ class AlvikRAI: public BaseRAI<AlvikRAI> {
     }
     bool begin(String hostname, unsigned short port)  {
       alvik().begin();
+      set_player_colors();
       return BaseRAI::begin(hostname.c_str(), port);
     }
     bool begin(const char* hostname, u16 port)  {
       alvik().begin();
       return BaseRAI::begin(hostname, port);
     }
+    void set_player_colors_leds(bool red, bool green, bool blue) {
+          alvik().left_led.set_color(red,green,blue);
+          alvik().right_led.set_color(red,green,blue);
+    }
+    void set_player_colors() {
+      
+      auto player = preferences::get_preferences()->player_number;
+      switch(player) {
+        case 1:
+          return set_player_colors_leds(0,0,1);
+        case 2:
+          return set_player_colors_leds(1,0,0);
+        case 3:
+          return set_player_colors_leds(0,1,0);
+        case 4:
+          return set_player_colors_leds(1,1,0);
+
+  }
+  
+}
   protected:
     void set_leds_error(bool value = true) {
       leds::green(!value);
@@ -163,7 +183,10 @@ void setup() {
   leds::builtin(false);
 }
 
+
+
 void loop() {
+  
   // static u32 iteration = 0;
   // man.service();
   // if ( (iteration % 120) == 0 ) {

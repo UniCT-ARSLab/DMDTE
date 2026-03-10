@@ -4,15 +4,16 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://dsahh7r3uufkx"
 path.s3tc="res://.godot/imported/table.svg-18f4dbfe36b3079e788a15be8af7921e.s3tc.ctex"
+path.etc2="res://.godot/imported/table.svg-18f4dbfe36b3079e788a15be8af7921e.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 
 [deps]
 
 source_file="res://assets/eurobot/table.svg"
-dest_files=["res://.godot/imported/table.svg-18f4dbfe36b3079e788a15be8af7921e.s3tc.ctex"]
+dest_files=["res://.godot/imported/table.svg-18f4dbfe36b3079e788a15be8af7921e.s3tc.ctex", "res://.godot/imported/table.svg-18f4dbfe36b3079e788a15be8af7921e.etc2.ctex"]
 
 [params]
 

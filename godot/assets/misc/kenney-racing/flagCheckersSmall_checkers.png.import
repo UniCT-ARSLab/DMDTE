@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://uuw07qpuebtv"
 path.s3tc="res://.godot/imported/flagCheckersSmall_checkers.png-51277dc08d0392183fe5fccdf835b72a.s3tc.ctex"
+path.etc2="res://.godot/imported/flagCheckersSmall_checkers.png-51277dc08d0392183fe5fccdf835b72a.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/misc/kenney-racing/flagCheckersSmall_checkers.png"
-dest_files=["res://.godot/imported/flagCheckersSmall_checkers.png-51277dc08d0392183fe5fccdf835b72a.s3tc.ctex"]
+dest_files=["res://.godot/imported/flagCheckersSmall_checkers.png-51277dc08d0392183fe5fccdf835b72a.s3tc.ctex", "res://.godot/imported/flagCheckersSmall_checkers.png-51277dc08d0392183fe5fccdf835b72a.etc2.ctex"]
 
 [params]
 

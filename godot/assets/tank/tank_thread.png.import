@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://cb0nhdo72knb8"
 path.s3tc="res://.godot/imported/tank_thread.png-a9433bd33d8f9beca5fa4003b9c01cfd.s3tc.ctex"
+path.etc2="res://.godot/imported/tank_thread.png-a9433bd33d8f9beca5fa4003b9c01cfd.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/tank/tank_thread.png"
-dest_files=["res://.godot/imported/tank_thread.png-a9433bd33d8f9beca5fa4003b9c01cfd.s3tc.ctex"]
+dest_files=["res://.godot/imported/tank_thread.png-a9433bd33d8f9beca5fa4003b9c01cfd.s3tc.ctex", "res://.godot/imported/tank_thread.png-a9433bd33d8f9beca5fa4003b9c01cfd.etc2.ctex"]
 
 [params]
 

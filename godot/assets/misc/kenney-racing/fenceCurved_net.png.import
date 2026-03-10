@@ -4,8 +4,9 @@ importer="texture"
 type="CompressedTexture2D"
 uid="uid://d2a2f1y87usgl"
 path.s3tc="res://.godot/imported/fenceCurved_net.png-24a5037058923fc2fa3a14353e8b6153.s3tc.ctex"
+path.etc2="res://.godot/imported/fenceCurved_net.png-24a5037058923fc2fa3a14353e8b6153.etc2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
 }
 generator_parameters={
@@ -15,7 +16,7 @@ generator_parameters={
 [deps]
 
 source_file="res://assets/misc/kenney-racing/fenceCurved_net.png"
-dest_files=["res://.godot/imported/fenceCurved_net.png-24a5037058923fc2fa3a14353e8b6153.s3tc.ctex"]
+dest_files=["res://.godot/imported/fenceCurved_net.png-24a5037058923fc2fa3a14353e8b6153.s3tc.ctex", "res://.godot/imported/fenceCurved_net.png-24a5037058923fc2fa3a14353e8b6153.etc2.ctex"]
 
 [params]
 

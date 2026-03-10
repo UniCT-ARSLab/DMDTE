@@ -24,7 +24,7 @@ func die():
 	animated_flags.visible = true
 	tween.tween_property(animated_flags, "position:y", animated_flags.position.y+7, 1)
 	animated_flags.play("sventola", 1.5)
-	
+	get_parent().set_controllable(false)
 	return
 
 @rpc("authority", "call_local", "reliable")

@@ -167,14 +167,18 @@ int main(int argc, const char **argv) {
 
 	auto loop = std::thread([&](){
 		const float dt = 1.0f / 60.0f;
+    float time = 1.0f;
 		const auto dt_seconds  = std::chrono::duration<float>(dt);
 
 		std::println("dt: {0}", dt);
 		for(;;) {
+      bool full_update = time > 1.0;
 			instance->integrate(dt);
-			instance->service();
+			instance->service(full_update);
 
 			std::this_thread::sleep_for(dt_seconds);
+      
+      time = time >= 1.0 ? 0.0f : time + dt;      
 		}
 	});
 

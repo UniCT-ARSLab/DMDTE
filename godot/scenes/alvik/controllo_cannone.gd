@@ -17,16 +17,21 @@ var bullet_scene = preload("res://scenes/bullet/bullet.tscn")
 @onready var buffer_progress_bar = $BufferSubViewport/BufferProgressBar
 @onready var buffer_bar_sprite_3d = $"../Model/BufferBarSprite3D"
 
-var enabled: bool = true
+var enabled: bool = false
 
 var is_charging: bool = false
-var can_fire: bool = true
+var can_fire: bool = false
 var _time_buffer := 0.0
 var _time_buffer_enabled := false
 
-
+func set_can_fire(value: bool):
+	can_fire = value
+	is_charging = false
+	_time_buffer_enabled = false
+	_time_buffer = 0.0
 
 func _process(delta):
+	if not enabled: return
 	if can_fire and _time_buffer_enabled:
 		_time_buffer = clampf(_time_buffer + delta, 0, buffer_time)
 		self.buffer_progress_bar.value = _time_buffer / buffer_time
@@ -34,6 +39,7 @@ func _process(delta):
 	self.recharge_progress_bar.value = 1 -( timer.time_left / timer.wait_time)
 
 func _input(event):
+	
 	var has_authority :=  get_multiplayer_authority() == multiplayer.multiplayer_peer.get_unique_id()
 	if not has_authority or not DisplayServer.window_is_focused(): return
 	

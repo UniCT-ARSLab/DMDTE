@@ -4,7 +4,6 @@ extends DigitalGhost
 var is_battery_charging: int = 0
 var drive_speed: Vector2 = Vector2.ZERO
 
-
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("reset"): 
 		reset_pose()

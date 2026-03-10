@@ -48,6 +48,7 @@ func _service() -> void:
 func initialize_server():
 	host = ENetConnection.new()
 	var port :int =  CmdArgs.get_int('dtp-port', self.host_port)
+	
 	print_debug("porta: %d" % port)
 	var error: Error = host.create_host_bound(host_address, port)
 	if error:

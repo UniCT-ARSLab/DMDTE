@@ -164,8 +164,7 @@ namespace tinyrpc {
             for ( const auto &prop : properties ) {
                 if ( prop.readFn != nullptr ) {
                     /// todo!: use diffs
-                    write_property(prop);
-                    written_properties++;
+                    written_properties += write_property_if_changed(prop, full_and_reliable);
                 }
             }
             if ( written_properties > 0 && this->is_connected() ) {
@@ -175,9 +174,9 @@ namespace tinyrpc {
             }
         }
 
-        void service() { 
+        void service(bool full_update = false) { 
             ClientAbstraction::service();
-            update(true /*false*/);
+            update( full_update );
         }
 
         void set_agent_identification(std::string_view agent_identification) {
@@ -204,7 +203,7 @@ namespace tinyrpc {
         void on_connect() override {
             send_agent_identification();
         }
-        private:
+    private:
         void send_agent_identification() {
             u32 msgsize = sizeof(u8) + agent_identification.size();
             u8 message[msgsize];
@@ -252,6 +251,27 @@ namespace tinyrpc {
                 it+=data_size;
             }*/
         }
+        u32 write_property_if_changed(const Property &prop, bool force = false) {
+            std::uint8_t temp[prop.size];
+            std::uint8_t *storage = property_storage.data() + prop.offset;
+            
+            prop.readFn(ctx_ref(), prop, temp, prop.size);
+            
+            bool differs = std::memcmp(temp, storage, prop.size);
+            
+            if ( force || differs ) {
+
+                std::memcpy(storage, temp, prop.size);
+                u8 index = (u8)prop.index;
+                u8 size = (u8)prop.size;
+                write_to(update_storage, &index, sizeof(u8));
+                write_to(update_storage, &size, sizeof(u8));
+                write_to(update_storage, temp, prop.size);
+                return 1;
+            }
+            return 0;
+
+        }
         u32 write_property(const Property &prop) {
             u8 index = (u8)prop.index;
             u8 size = (u8)prop.size;
@@ -274,6 +294,9 @@ namespace tinyrpc {
             }
             return offset;
         }
+
+
+        
     protected:
         std::string_view agent_identification = "BaseRAI";
         enum class MessageType: u8 {

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cjnqq7v8q1d6l"]
+[gd_scene format=3 uid="uid://cjnqq7v8q1d6l"]
 
 [ext_resource type="Texture2D" uid="uid://hmh1a62cy8ox" path="res://assets/misc/balloons/red.png" id="1_jqtd5"]
 [ext_resource type="Script" uid="uid://c25gx75rxj33" path="res://scenes/balloon/balloon.gd" id="1_o0te0"]
@@ -45,7 +45,7 @@ _data = {
 [sub_resource type="SphereShape3D" id="SphereShape3D_2c2u2"]
 radius = 2.489181
 
-[node name="Balloon" type="RigidBody3D"]
+[node name="Balloon" type="RigidBody3D" unique_id=2000911518]
 collision_layer = 8
 collision_mask = 12
 mass = 0.5
@@ -54,7 +54,7 @@ gravity_scale = -2.0
 linear_damp = 1.0
 script = ExtResource("1_o0te0")
 
-[node name="Sprite3D" type="Sprite3D" parent="."]
+[node name="Sprite3D" type="Sprite3D" parent="." unique_id=551171554]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.050337553, 0)
 offset = Vector2(0, 12.065)
 pixel_size = 0.2
@@ -62,12 +62,10 @@ billboard = 2
 texture_filter = 0
 texture = ExtResource("1_jqtd5")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-libraries = {
-&"": SubResource("AnimationLibrary_784ay")
-}
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=971823390]
+libraries/ = SubResource("AnimationLibrary_784ay")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1918609911]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4640632, 0)
 shape = SubResource("SphereShape3D_2c2u2")
 

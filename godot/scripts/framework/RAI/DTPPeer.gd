@@ -22,6 +22,10 @@ var _property_queue: Dictionary = {}
 var _rpc_queue: Dictionary = {}
 
 
+var _num_packets_received: float = 0
+var _num_packets_sent: float = 0
+var _num_packets_dt_acc: float = 0.0
+
 var peer_address: String:
 	get:
 		return peer.get_remote_address()
@@ -81,10 +85,19 @@ func _process(dt: float) -> void:
 			_updateIntervalTicks = 0
 			_flush_update_queue()
 			_flush_rpc_queue()
+		
+		if _num_packets_dt_acc > 1.0:
+			print("received: {0}\tsent: {1}".format([_num_packets_received, _num_packets_sent]))
+			_num_packets_dt_acc = 0.0
+			_num_packets_received = 0
+			_num_packets_sent = 0
+		_num_packets_dt_acc+=dt
+		
 	
 func _service(_dt: float) -> void:
 	while peer.get_available_packet_count() > 0:
 		var packet: PackedByteArray = peer.get_packet()
+		_num_packets_received+=1
 		var it: int = 0
 		
 		var msgty: int = packet.decode_u8(it); it+=1
@@ -179,9 +192,11 @@ func set_property(name_: String, value: Variant) -> int:
 
 func _flush_rpc_queue():
 	for rpc_call in _rpc_queue.values():
+		
 		peer.send(0, rpc_call, ENetPacketPeer.FLAG_RELIABLE)
+	_num_packets_sent+=_rpc_queue.size()
 	_rpc_queue.clear()
-	
+
 func _flush_update_queue():
 	# no need to test is_active as it's called if is_active is true
 	var number_of_properties: int = _property_queue.size()
@@ -196,6 +211,9 @@ func _flush_update_queue():
 	_property_queue.clear()
 	
 	peer.put_packet(payload)
+	
+	_num_packets_sent+=_rpc_queue.size()
+
 	
 func call_method(name_: String, params: Array) -> int:
 	if !is_active:

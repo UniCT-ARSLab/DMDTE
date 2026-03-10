@@ -29,6 +29,8 @@ var _linear_velocity: float:
 	set(value):
 		self.velocity = -basis.z * value
 
+var _prev_drive_speed:= Vector2.ZERO
+
 func _ready():
 	tank_model.set_surface_override_material(1,tank_model.get_active_material(1).duplicate())
 	tank_model.set_surface_override_material(2,tank_model.get_active_material(2).duplicate())
@@ -82,7 +84,10 @@ func _physics_process_drive(dt: float):
 	if ghost and dtp_peer.is_active:
 		var linear_velocity: float = _linear_velocity if abs(linear) > 0.0 else 0.0
 		var angular_velocity: float = _angular_velocity if abs(angular) > 0.0 else 0.0
-		 
+		
+	
+
+			
 		ghost.drive(linear_velocity, angular_velocity)
 		if not is_on_wall():
 			_physics_process_drive_lerp2ghost(dt)
