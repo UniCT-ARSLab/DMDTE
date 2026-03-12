@@ -7,12 +7,6 @@ signal on_dtp_ready(dtpm: DTPPeer)
 @onready var manual_controller: ManualController = $Controls/ManualController
 @onready var agent_controller = $Controls/AgentController
 
-
-
-
-var curr_pose: Vector3
-var past_pose: Vector3
-
 var start_position: Vector3
 var _material: StandardMaterial3D
 var _color: Color:
@@ -73,6 +67,7 @@ func set_controllable(value: bool):
 	
 func set_home_position(home_position: Vector3):
 	self.agent_controller.home_position = home_position
+
 func return_to_home():
 	self.agent_controller.enabled = true
 	self.agent_controller.return_home()

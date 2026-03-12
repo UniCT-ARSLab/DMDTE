@@ -1,4 +1,10 @@
 class_name MatchManager extends Node
+
+static var _instance : MatchManager
+static func singleton() -> MatchManager:
+	return MatchManager._instance
+
+
 enum State {
 	WaitingForPlayers,
 	Countdown,
@@ -18,6 +24,9 @@ var num_players: int:
 
 var state: State = State.WaitingForPlayers
 var num_defeated_players: int = 0
+
+func _init():
+	_instance = self
 
 func _ready() -> void:
 	state_changed.emit(self.state)

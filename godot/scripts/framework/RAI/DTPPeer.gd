@@ -87,7 +87,7 @@ func _process(dt: float) -> void:
 			_flush_rpc_queue()
 		
 		if _num_packets_dt_acc > 1.0:
-			print("received: {0}\tsent: {1}".format([_num_packets_received, _num_packets_sent]))
+			print_debug("received: {0}\tsent: {1}".format([_num_packets_received, _num_packets_sent]))
 			_num_packets_dt_acc = 0.0
 			_num_packets_received = 0
 			_num_packets_sent = 0

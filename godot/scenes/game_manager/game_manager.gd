@@ -51,8 +51,11 @@ func _on_dtp_network_on_digital_twin_spawn(instance: DigitalTwin) -> void:
 				return
 			add_player(instance)
 			var spawn_zone := spawn_zones[player_id]
+
 			instance.set_home_position(spawn_zone.global_position)
-			instance.ghost.reset_pose(spawn_zone.global_position.x, spawn_zone.global_position.z, spawn_zone.global_rotation.y, 0)
+			
+			instance.ghost.spawn_pose = (Vector3(spawn_zone.global_position.x, spawn_zone.global_position.z, spawn_zone.global_rotation.y))
+			instance.ghost.reset_pose_spawn()
 			instance.set_visibility(true)
 	)
 	

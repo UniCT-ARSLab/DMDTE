@@ -15,6 +15,8 @@ extends CharacterBody3D
 @export var position_lerp_weight: float = 1.0
 @export var rotation_slerp_weight: float = 1.0
 
+var spawn_transform: Transform3D
+
 var pose_buffer: Array[Vector3] = [ Vector3.ZERO, Vector3.ZERO ]
 
 var linear: float = 0
@@ -37,10 +39,6 @@ func _ready():
 	pose_buffer[0] =  _extract_pose()
 	pose_buffer[0] = pose_buffer[1]
 
-func _input(event: InputEvent) -> void:
-	if event.is_action("reset"): 
-		self.position = Vector3.ZERO
-		self.rotation = Vector3.ZERO
 
 func drive(linear_: float, angular_: float):
 	self.linear = linear_

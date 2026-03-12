@@ -109,6 +109,7 @@ script = ExtResource("2_4b7i3")
 methods = Array[ExtResource("3_n4oaj")]([SubResource("Resource_1wgkl"), SubResource("Resource_om5la")])
 
 [node name="Model" parent="." index="1"]
+visible = false
 collision_mask = 7
 
 [node name="Tank2" parent="Model" index="0" unique_id=1621862760 instance=ExtResource("6_h8ngr")]
@@ -191,7 +192,7 @@ metadata/_custom_type_script = "uid://b0ykpc7q5tm13"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -317.7767)
 
 [node name="PhantomCamera3D" type="Node3D" parent="Model" index="9" unique_id=1773231307]
-transform = Transform3D(1, 0, 0, 0, 0.98741156, 0.15815721, 0, -0.15815721, 0.98741156, 0, 17.426, 30)
+transform = Transform3D(1, 0, 0, 0, 0.98741156, 0.15815718, 0, -0.15815718, 0.98741156, 0, 17.426, 30)
 top_level = true
 script = ExtResource("7_h8ngr")
 weight = 2.0
