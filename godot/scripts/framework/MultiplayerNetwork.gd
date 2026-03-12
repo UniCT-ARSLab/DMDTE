@@ -77,7 +77,7 @@ func spawn_robot(peer_id_: int, robot_name: String, identification: String, dtp_
 	if dtp_network.spawn_path.has_node(robot_name):
 		print("[%d] prof già ho il mrobottino :c" % multiplayer.multiplayer_peer.get_unique_id())
 		robot = dtp_network.spawn_path.get_node(robot_name)
-		robot.set_multiplayer_authority(peer_id_)
+		# robot.set_multiplayer_authority(peer_id_)
 		robot.ghost.visible = false
 		robot.peer_id = dtp_peer_id
 

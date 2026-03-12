@@ -97,10 +97,78 @@ viewport_path = NodePath("ControlloCannone/RechargeSubViewport")
 [sub_resource type="ViewportTexture" id="ViewportTexture_7lj0u"]
 viewport_path = NodePath("ControlloCannone/BufferSubViewport")
 
+[sub_resource type="Animation" id="Animation_7lj0u"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedFlags:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_qtdv7"]
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedFlags")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 10, 0, 1, 1, 0, 2, 0)
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedFlags:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_ahnk8"]
+resource_name = "show"
+tracks/0/type = "position_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("AnimatedFlags")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 2, 0, 1, 1, 0, 10, 0)
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("AnimatedFlags:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7lj0u"]
+_data = {
+&"RESET": SubResource("Animation_7lj0u"),
+&"reset": SubResource("Animation_qtdv7"),
+&"show": SubResource("Animation_ahnk8")
+}
+
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_4b7i3"]
-properties/0/path = NodePath(".:peer_id")
+properties/0/path = NodePath("ControlloVita:health")
 properties/0/spawn = true
 properties/0/replication_mode = 2
+properties/1/path = NodePath("ControlloVita:invincible")
+properties/1/spawn = true
+properties/1/replication_mode = 2
 
 [node name="Alvik" unique_id=652828652 instance=ExtResource("1_ssjqv")]
 script = ExtResource("2_4b7i3")
@@ -109,7 +177,6 @@ script = ExtResource("2_4b7i3")
 methods = Array[ExtResource("3_n4oaj")]([SubResource("Resource_1wgkl"), SubResource("Resource_om5la")])
 
 [node name="Model" parent="." index="1"]
-visible = false
 collision_mask = 7
 
 [node name="Tank2" parent="Model" index="0" unique_id=1621862760 instance=ExtResource("6_h8ngr")]
@@ -154,18 +221,7 @@ randomness = 1.0
 process_material = SubResource("ParticleProcessMaterial_qtdv7")
 draw_pass_1 = SubResource("SphereMesh_ahnk8")
 
-[node name="AnimatedFlags" type="AnimatedSprite3D" parent="Model" index="6" unique_id=1683463871]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.26036596, 3.0720615, 0)
-visible = false
-pixel_size = 0.5
-billboard = 2
-texture_filter = 0
-sprite_frames = ExtResource("5_4eqhx")
-animation = &"sventola"
-frame_progress = 0.19042774
-speed_scale = 1.5
-
-[node name="Balloons" type="Node3D" parent="Model" index="7" unique_id=705235964]
+[node name="Balloons" type="Node3D" parent="Model" index="6" unique_id=705235964]
 
 [node name="BallonJoint" type="PinJoint3D" parent="Model/Balloons" index="0" unique_id=283775475]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.086907, 4.1417584)
@@ -188,11 +244,11 @@ node_b = NodePath("../../../ControlloVita/Balloons/Balloon3")
 script = ExtResource("2_j7q5w")
 metadata/_custom_type_script = "uid://b0ykpc7q5tm13"
 
-[node name="Marker3D" type="Marker3D" parent="Model" index="8" unique_id=1359286075]
+[node name="Marker3D" type="Marker3D" parent="Model" index="7" unique_id=1359286075]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -317.7767)
 
-[node name="PhantomCamera3D" type="Node3D" parent="Model" index="9" unique_id=1773231307]
-transform = Transform3D(1, 0, 0, 0, 0.98741156, 0.15815718, 0, -0.15815718, 0.98741156, 0, 17.426, 30)
+[node name="PhantomCamera3D" type="Node3D" parent="Model" index="8" unique_id=1773231307]
+transform = Transform3D(1, 0, 0, 0, 0.98741156, 0.15815717, 0, -0.15815717, 0.98741156, 0, 17.426, 30)
 top_level = true
 script = ExtResource("7_h8ngr")
 weight = 2.0
@@ -202,7 +258,7 @@ follow_damping = true
 follow_damping_value = Vector3(0.725, 0.725, 0.725)
 metadata/_custom_type_script = "uid://csjccrhj5wnx7"
 
-[node name="CannoneRechargeBarSprite3D" type="Sprite3D" parent="Model" index="10" unique_id=1281732236]
+[node name="CannoneRechargeBarSprite3D" type="Sprite3D" parent="Model" index="9" unique_id=1281732236]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.9978337, 6)
 visible = false
 billboard = 1
@@ -211,7 +267,7 @@ no_depth_test = true
 render_priority = 127
 texture = SubResource("ViewportTexture_wfg7h")
 
-[node name="BufferBarSprite3D" type="Sprite3D" parent="Model" index="11" unique_id=638119169]
+[node name="BufferBarSprite3D" type="Sprite3D" parent="Model" index="10" unique_id=638119169]
 transform = Transform3D(2.1079683, 0, 0, 0, 2.1079683, 0, 0, 0, 1, -8.6887455, 6.253736, 6)
 visible = false
 pixel_size = 0.1
@@ -222,10 +278,32 @@ texture_filter = 0
 render_priority = 127
 texture = SubResource("ViewportTexture_7lj0u")
 
+[node name="Flag" type="Node3D" parent="Model" index="11" unique_id=1155171479]
+
+[node name="AnimatedFlags" type="AnimatedSprite3D" parent="Model/Flag" index="0" unique_id=1683463871]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
+visible = false
+pixel_size = 0.5
+billboard = 2
+texture_filter = 0
+sprite_frames = ExtResource("5_4eqhx")
+animation = &"sventola"
+autoplay = "sventola"
+frame_progress = 0.58657974
+speed_scale = 1.5
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Model/Flag" index="1" unique_id=154703448]
+reset_on_save = false
+libraries/ = SubResource("AnimationLibrary_7lj0u")
+
 [node name="Ghost" parent="." index="2"]
 visible = false
+battery = null
 
-[node name="ControlloCannone" type="Node" parent="." index="5" unique_id=147680018]
+[node name="AlvikMultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="." index="4" unique_id=1166311415]
+replication_config = SubResource("SceneReplicationConfig_4b7i3")
+
+[node name="ControlloCannone" type="Node" parent="." index="6" unique_id=147680018]
 script = ExtResource("2_j3gk6")
 buffer_time_initial_scale = 0.25
 
@@ -266,8 +344,9 @@ step = 0.01
 texture_under = ExtResource("11_qtdv7")
 texture_progress = ExtResource("12_ahnk8")
 
-[node name="ControlloVita" type="Node" parent="." index="6" unique_id=194824434]
+[node name="ControlloVita" type="Node" parent="." index="7" unique_id=194824434]
 script = ExtResource("3_fbsrp")
+health = 3
 
 [node name="Balloons" type="Node" parent="ControlloVita" index="0" unique_id=1186701114]
 
@@ -285,9 +364,6 @@ max_height = 100.0
 
 [node name="InvincibilityTimer" type="Timer" parent="ControlloVita" index="1" unique_id=592419737]
 one_shot = true
-
-[node name="TankThreadsSynchroniser" type="MultiplayerSynchronizer" parent="." index="7" unique_id=1166311415]
-replication_config = SubResource("SceneReplicationConfig_4b7i3")
 
 [connection signal="on_connect" from="DTPPeer" to="." method="_on_dtp_peer_on_connect"]
 [connection signal="timeout" from="ControlloCannone/Timer" to="ControlloCannone" method="_on_timer_timeout"]

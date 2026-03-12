@@ -8,7 +8,7 @@ var is_battery_charging: int = 0
 var drive_speed: Vector2 = Vector2.ZERO
 
 func _input(event: InputEvent) -> void:
-	var can_reset = MatchManager.singleton().state == MatchManager.State.WaitingForPlayers
+	var can_reset = MatchManager.instance.waiting_for_players
 	if can_reset and event.is_action("reset"): 
 		self.reset_pose_spawn()
 

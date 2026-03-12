@@ -87,8 +87,8 @@ func _physics_process_drive(dt: float):
 
 			
 		ghost.drive(linear_velocity, angular_velocity)
-		if not is_on_wall():
-			_physics_process_drive_lerp2ghost(dt)
+		#if not is_on_wall():
+		_physics_process_drive_lerp2ghost(dt)
 	
 	
 

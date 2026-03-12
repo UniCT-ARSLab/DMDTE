@@ -1,9 +1,6 @@
 class_name MatchManager extends Node
 
-static var _instance : MatchManager
-static func singleton() -> MatchManager:
-	return MatchManager._instance
-
+static var instance : MatchManager
 
 enum State {
 	WaitingForPlayers,
@@ -24,18 +21,27 @@ var num_players: int:
 
 var state: State = State.WaitingForPlayers
 var num_defeated_players: int = 0
+var in_game: bool:
+	get: return state == State.InGame
+var waiting_for_players: bool:
+	get: return state == State.WaitingForPlayers
+var transitioning: bool:
+	get: return state == State.Countdown or state == State.Resetting
 
 func _init():
-	_instance = self
+	instance = self
+
+func _input(event: InputEvent):
+	if multiplayer.is_server() and event.is_action_pressed('match_reset'):
+		notify_state_change.rpc(State.Resetting)
+
 
 func _ready() -> void:
 	state_changed.emit(self.state)
 	start_game.visible = false
 
 
-func on_player_added(player: AlvikTank):
-	player.set_invincible(true)
-	player.set_can_shoot(false)
+func on_player_added(player: AlvikTank):	
 	if player.is_multiplayer_authority():
 		
 		my_player = player
@@ -51,7 +57,7 @@ func on_player_added(player: AlvikTank):
 				player.set_controllable(false)
 			
 		
-	player.controllo_vita.damaged.connect(on_player_damaged)
+	player.controllo_vita.died_signal.connect(on_player_dead)
 	show_start_button_if_necessary()
 
 func show_start_button_if_necessary():
@@ -95,6 +101,7 @@ func state_changed_resetting():
 	set_players_controllable(false)
 	set_players_invincibility(true)
 
+
 	timer.start(3); await timer.timeout
 
 	
@@ -119,14 +126,33 @@ func player_request_begin_match():
 	# switch in game
 	self.notify_state_change.rpc(State.InGame)
 	
+func on_player_dead(player_id: int):
+	if my_player.peer_id == player_id:
+		my_player.set_controllable(false)
+		my_player.set_can_shoot(false)
+	
+	if not multiplayer.is_server(): return
 
-func on_player_damaged(player_id: int, health: int):
+	num_defeated_players+=1
+	if players.size() - num_defeated_players <= 1:
+		num_defeated_players = 0
+		print_debug("Match ended! ( sono autorità {0})".format([multiplayer.is_server()]))
+		if multiplayer.is_server():
+			notify_state_change.rpc(State.Resetting)
+	
+		
+"""
+@rpc("any_peer", "call_remote", "reliable")
+func _on_player_dead(player_id: int):
+	if multiplayer.is_server():
+		print_debug("Player %d died!" % player_id)
 	if not state == State.InGame: return
-	if health == 0:
-		num_defeated_players+=1
-		if my_player.peer_id == player_id:
-			my_player.set_controllable(false)
-			my_player.set_can_shoot(false)
+
+
+	num_defeated_players+=1
+	if my_player.peer_id == player_id:
+		my_player.set_controllable(false)
+		my_player.set_can_shoot(false)
 
 	if players.size() - num_defeated_players <= 1:
 		num_defeated_players = 0
@@ -134,7 +160,7 @@ func on_player_damaged(player_id: int, health: int):
 		if multiplayer.is_server():
 			notify_state_change.rpc(State.Resetting)
 		
-		
+"""
 func _on_start_game_pressed() -> void:
 	self.player_request_begin_match.rpc()
 	

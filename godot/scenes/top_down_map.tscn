@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://dwaea740po3ik"]
+
+[sub_resource type="Environment" id="Environment_vqh4b"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_4gjhw"]
+viewport_path = NodePath("UI/Control/MapSubview")
+
+[node name="Control" type="Control" unique_id=1338654749]
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -256.0
+offset_top = -256.0
+grow_horizontal = 0
+grow_vertical = 0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="MapSubview" type="SubViewport" parent="." unique_id=1474425659]
+transparent_bg = true
+size = Vector2i(768, 512)
+render_target_clear_mode = 2
+
+[node name="MapCamera" type="Camera3D" parent="MapSubview" unique_id=1163906410]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, 0, 61.31225, -1.350306e-06)
+environment = SubResource("Environment_vqh4b")
+projection = 1
+size = 150.0
+far = 3996.4
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2107782547]
+texture = SubResource("ViewportTexture_4gjhw")

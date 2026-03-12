@@ -6,6 +6,7 @@ signal on_dtp_ready(dtpm: DTPPeer)
 @onready var phantom_camera_3d = $Model/PhantomCamera3D
 @onready var manual_controller: ManualController = $Controls/ManualController
 @onready var agent_controller = $Controls/AgentController
+#@onready var map_camera = $/UI/Control/Sprite2D
 
 var start_position: Vector3
 var _material: StandardMaterial3D
@@ -37,7 +38,7 @@ var max_pitch: float = 50
 func _process(delta):
 	pass	
 		
-@rpc("authority", "call_local", "reliable")
+@rpc("any_peer", "call_local", "reliable")
 func set_color_using_player_id(player_id: int):
 	var colors : = Globals.getPlayerColors()
 	var key:='P%d' % player_id
@@ -74,3 +75,4 @@ func return_to_home():
 	
 func reset():
 	controllo_vita.reset()
+	self.ghost.reset_pose_spawn()

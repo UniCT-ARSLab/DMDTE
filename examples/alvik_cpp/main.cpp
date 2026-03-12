@@ -76,30 +76,15 @@ class AlvikRAI: public BaseRAI<AlvikRAI> {
         .name = "reset_pose",
         .handler = [](AlvikRAI &self, const void *data, int size ) {
           
-          struct {
-            Pose pose{ 0.0f, 0.0f, 0.0f};
-            int force{1};
-          } parameters;
+          Pose pose{ 0.0f, 0.0f, 0.0f};
 
           
-          if ( size == sizeof(parameters)) {
-            std::memcpy(&parameters, data, sizeof(parameters));
+          if ( size >= sizeof(Pose)) {
+            std::memcpy(&pose, data, sizeof(Pose));
           }
-          // Serial.printf("Ricevuta reset pose ( size: %d, expected: %d ):\n\t x: %f  y: %f theta: %f force: %d \n",
-          //   size, sizeof(parameters),
-          //   parameters.pose.x,
-          //   parameters.pose.y,
-          //   parameters.pose.theta,
-          //   parameters.force
-          // );
-          //Pose pose { 0.0f, 0.0f, 0.0f};
           
-          if ( parameters.force != 0 || parameters.force == 0 && self.reset_pose_count == 0 ) {
-            auto &pose = parameters.pose;
-            self.pose = pose;
-          }
-
-          self.reset_pose_count++;
+          self.pose = pose;
+         
         }
       });
     }
