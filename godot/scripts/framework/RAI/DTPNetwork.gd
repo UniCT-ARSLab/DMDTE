@@ -87,6 +87,7 @@ func _spawn_digital_twin(identification: String, peer: ENetPacketPeer, peer_id: 
 	
 	var instance : DigitalTwin = digitalTwinScene.instantiate()
 	instance.set_meta("identification", identification)
+	instance.identification = identification
 	instance.name = instance.name + "[%d]" % [peer_id]
 	instance.accept_peer.call_deferred(peer, peer_id)
 	instance.peer_id = peer_id
@@ -127,7 +128,8 @@ func disconnect_dtp_peer(peer_id: int):
 	var digital_twin: DigitalTwin = instanced_peers[peer_id] 
 	instanced_peers.erase(peer_id)
 	
-	digital_twin.dtp_peer.peer.peer_disconnect_now()
+	if digital_twin.dtp_peer.peer != null:
+		digital_twin.dtp_peer.peer.peer_disconnect_now()
 	digital_twin.despawn_dt.rpc()
 		
 

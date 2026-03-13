@@ -1,5 +1,5 @@
 class_name MultiplayerNetwork extends Node
-
+const AUTHORITY_SPAWN_ROBOT_META_KEY: StringName = "AUTHORITY_SPAWN_ROBOT_META_KEY"
 signal twin_spawned(twin: DigitalTwin)
 
 var is_host: bool = false
@@ -53,6 +53,7 @@ func create_host(port: int):
 	is_host = true
 
 func _on_connect(id: int):
+	#if not multiplayer.is_server(): return
 	print("[%d] peer %d connected" % [peer_id, id])
 	#multiplayer_spawner.spawn_function = _spawnRemoteTwin
 	
@@ -60,47 +61,62 @@ func _on_connect(id: int):
 	#robot.set_multiplayer_authority(id)
 	#robot.name = str(id)
 	#dtp_network.spawn_path.add_child(robot, true)
+	for twin in self.twins.get_children():
+		if not twin or not twin is AlvikTank: continue 
+		
+		spawn_robot.rpc_id(
+			id,
+			twin.multiplayer_peer_id, 
+			twin.name, 
+			twin.identification,
+			twin.peer_id
+			)
+			
 
 func _on_discconnect(id_peer):
+	despawn_robot.rpc(id_peer)
 	
-	for dt in twins.get_children():
-		if dt.get_multiplayer_authority() == id_peer:
-			dt.queue_free()
-			return
-	
-@rpc("any_peer","call_remote", "reliable")
+@rpc("any_peer","call_local", "reliable")
 func spawn_robot(peer_id_: int, robot_name: String, identification: String, dtp_peer_id: int):
 
 	var robot: DigitalTwin
-	if peer_id_ == multiplayer.multiplayer_peer.get_unique_id() : return
 	
+	if peer_id_ == multiplayer.multiplayer_peer.get_unique_id() : return
+		
 	if dtp_network.spawn_path.has_node(robot_name):
 		print("[%d] prof già ho il mrobottino :c" % multiplayer.multiplayer_peer.get_unique_id())
 		robot = dtp_network.spawn_path.get_node(robot_name)
 		# robot.set_multiplayer_authority(peer_id_)
 		robot.ghost.visible = false
 		robot.peer_id = dtp_peer_id
-
+		robot.identification = identification
 		robot.multiplayer_peer_id = peer_id_
 		robot.check_remote.call_deferred(true)
 		robot.disableProcesses.call_deferred()
 		#return
 	else:
+			
 		
 		robot = dtp_network.digitalTwins[identification].instantiate()
+		robot.identification = identification
 		robot.peer_id = dtp_peer_id
 		#robot.ghost.visible = false
 		robot.name = robot_name
 		robot.multiplayer_peer_id = peer_id_
 		robot.check_remote.call_deferred(true)
 		robot.disableProcesses.call_deferred()
+
 		dtp_network.spawn_path.add_child(robot, true)
 		
 	twin_spawned.emit(robot)
 	
 	pass
 
-
+@rpc('any_peer','call_local', 'reliable')
+func despawn_robot(id_peer: int):
+	for dt in twins.get_children():
+		if dt.get_multiplayer_authority() == id_peer:
+			dt.queue_free()
 func _on_multiplayer_spawner_spawned(node):
 	print_debug("QUESTO NODO ",multiplayer.multiplayer_peer.get_unique_id(), " vorrebbe spawnare il robot del nodo ", node.multiplayer_peer_id)
 	if node.multiplayer_peer_id == multiplayer.multiplayer_peer.get_unique_id():

@@ -8,6 +8,7 @@ class_name DigitalTwin extends Node
 @onready var controls = $Controls
 
 
+@export var identification := '';
 @export var peer_id = -1
 var isRemote = false
 

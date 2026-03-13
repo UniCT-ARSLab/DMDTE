@@ -56,8 +56,9 @@ func on_player_added(player: AlvikTank):
 			State.Countdown|State.Resetting:
 				player.set_controllable(false)
 			
+	if not player.controllo_vita.is_connected('died_signal', on_player_dead):
+		player.controllo_vita.died_signal.connect(on_player_dead)
 		
-	player.controllo_vita.died_signal.connect(on_player_dead)
 	show_start_button_if_necessary()
 
 func show_start_button_if_necessary():
@@ -166,13 +167,18 @@ func _on_start_game_pressed() -> void:
 	
 func set_players_invincibility(value: bool):
 	for p in self.players.values():
+		if not p: continue
 		(p as AlvikTank).set_invincible(value)
 func set_players_can_shoot(value: bool):
 	for p in self.players.values():
+		if not p: continue
 		(p as AlvikTank).set_can_shoot(value)
 func set_players_controllable(value: bool):
 	for p in self.players.values():
+		if not p: continue
 		(p as AlvikTank).set_controllable(value)
 func players_reset():
 	for p in self.players.values():
+		if not p: continue
+
 		(p as AlvikTank).reset()
