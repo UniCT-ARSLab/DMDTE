@@ -1,5 +1,6 @@
 class_name ManualController extends Node
 
+signal fire()
 
 enum ControllerMode {
 	Polar,
@@ -13,12 +14,22 @@ enum ControllerMode {
 @export var mode: ControllerMode = ControllerMode.Polar
 @export var drawDirectionArrow: bool = false
 
+var direction:= Vector3.ZERO
 
 @export var enabled = true
 
+func _input(event: InputEvent):
+	if event is InputEventJoypadMotion:
+		
+		print("Device: {0}, axis: {1}, axis_value: {2}".format([event.device, event.axis, event.axis_value]))
+		
+	
+
 func _physics_process(_delta: float) -> void:
 	if not enabled : return
-	if not DisplayServer.window_is_focused(): return
+	
+	#if not DisplayServer.window_is_focused(): return
+	
 	var gas: float = Input.get_axis("gas_backward", "gas_forward")
 	match mode:
 		ControllerMode.Polar:
