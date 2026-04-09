@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+option go_package = "./;proto3";
+
+import "common.proto";
+
+enum EnumTest {
+    ENUM_TEST1 = 0;
+    ENUM_TEST2 = 2;
+    ENUM_TEST3 = 3;
+}
+
+message MsgBase {
+    message SubMsg {
+        int32 sub_field1 = 1;
+        string sub_field2 = 2;
+    }
+    int32 msg_field32 = 1;
+    repeated int64 field64 = 2;
+    string msg_field2 = 3;
+    bool b_field3 = 4;
+    double f_field4 = 5;
+    map<int32, string> map_field5 = 6;
+    EnumTest enum_field6 = 7;
+    SubMsg sub_msg = 8;
+    common.CommonMessage common_msg = 9;
+    common.CommonEnum common_enum = 10;
+    fixed32 fixed_field32 = 11;
+    fixed64 fixed_field64 = 12;
+    double double_field = 13;
+    map<string, SubMsg> map_field_sub = 14;
+}
+
+message MsgTest {
+    common.CommonMessage common_msg = 1;
+    repeated common.CommonEnum common_enums = 2;
+}
