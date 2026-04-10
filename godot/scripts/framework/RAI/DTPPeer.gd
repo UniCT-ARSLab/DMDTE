@@ -106,6 +106,7 @@ func _service(_dt: float) -> void:
 				_handle_update(packet, it)
 				pass
 			MessageType.Call:
+				return
 				_handle_call(packet, it)
 			MessageType.Identify:
 				push_warning("Ignored Identify packet.")
@@ -122,6 +123,7 @@ func _handle_call(packet: PackedByteArray, it: int) -> int:
 			var method: Callable = ghost[desc.name]
 			var params = []
 			var jt:= it
+			if not desc.params: return 0
 			for i in range(len(desc.params)):
 				var ty: Types.Type = desc.args[i]
 				var ty_size: int = Types.sizeof(ty)

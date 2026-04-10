@@ -12,8 +12,8 @@ def main():
     
     parser.add_argument(
         "-d", "--device", 
-        required=True, 
-        help="Il dispositivo seriale (es. /dev/ttyUSB0, /dev/ttyACM0)"
+        help="Il dispositivo seriale (es. /dev/ttyUSB0, /dev/ttyACM0)",
+        default='/dev/ttyACM0'
     )
     
     parser.add_argument(

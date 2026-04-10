@@ -34,6 +34,8 @@ func _init():
 func _input(event: InputEvent):
 	if multiplayer.is_server() and event.is_action_pressed('match_reset'):
 		notify_state_change.rpc(State.Resetting)
+	if event.is_action('start'):
+		self._on_start_game_pressed()
 
 
 func _ready() -> void:
@@ -163,7 +165,8 @@ func _on_player_dead(player_id: int):
 		
 """
 func _on_start_game_pressed() -> void:
-	self.player_request_begin_match.rpc()
+	if state == State.WaitingForPlayers:
+		self.player_request_begin_match.rpc()
 	
 func set_players_invincibility(value: bool):
 	for p in self.players.values():

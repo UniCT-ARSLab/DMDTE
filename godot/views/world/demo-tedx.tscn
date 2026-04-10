@@ -56,6 +56,9 @@ texture_filter = 5
 size = Vector2(170, 90)
 orientation = 1
 
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_1q8fu"]
+data = PackedVector3Array(85, 0, 45, -85, 0, 45, 85, 0, -45, -85, 0, 45, -85, 0, -45, 85, 0, -45)
+
 [sub_resource type="BoxMesh" id="BoxMesh_64q5c"]
 size = Vector3(170, 7, 1)
 
@@ -147,11 +150,11 @@ camera_3d_resource = SubResource("Resource_05rt4")
 [node name="SpawnZones" type="Node" parent="Environment" unique_id=222589118]
 
 [node name="SpawnerZone" parent="Environment/SpawnZones" unique_id=71742010 instance=ExtResource("12_8b3ek")]
-transform = Transform3D(1, 0, 1.7484555e-07, 0, 1, 0, -1.7484555e-07, 0, 1, -73.5, 0.1, 33.5)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -73.5, 0.1, -33.5)
 player_number = 1
 
 [node name="SpawnerZone4" parent="Environment/SpawnZones" unique_id=926274213 instance=ExtResource("12_8b3ek")]
-transform = Transform3D(-1, 0, 8.742278e-08, 0, 1, 0, -8.742278e-08, 0, -1, 73.5, 0.1, -33.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 73.5, 0.1, 33.5)
 player_number = 2
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="Environment" unique_id=1028067645 groups=["Clickable"]]
@@ -166,6 +169,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.20633698, 0, 0.03453064)
 material_override = SubResource("StandardMaterial3D_wxupg")
 mesh = SubResource("QuadMesh_7pkxe")
 skeleton = NodePath("../../../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Environment/NavigationRegion3D/Arena" unique_id=1193967036]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.20633698, 0, 0.03453064)
+shape = SubResource("ConcavePolygonShape3D_1q8fu")
 
 [node name="Twins" type="Node" parent="Environment/NavigationRegion3D" unique_id=254270530]
 

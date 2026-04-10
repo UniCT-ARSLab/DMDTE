@@ -41,7 +41,8 @@ func _process(delta):
 func _input(event):
 	
 	var has_authority :=  get_multiplayer_authority() == multiplayer.multiplayer_peer.get_unique_id()
-	if not has_authority or not DisplayServer.window_is_focused(): return
+	#if not has_authority or not DisplayServer.window_is_focused(): return
+	if not has_authority: return
 	
 	# posso sparare e ho premuto il pulsante
 	if can_fire and event.is_action_pressed("fire"):

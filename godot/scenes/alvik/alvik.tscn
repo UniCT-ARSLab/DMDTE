@@ -248,7 +248,7 @@ metadata/_custom_type_script = "uid://b0ykpc7q5tm13"
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -317.7767)
 
 [node name="PhantomCamera3D" type="Node3D" parent="Model" index="8" unique_id=1773231307]
-transform = Transform3D(1, 0, 0, 0, 0.98741156, 0.1581572, 0, -0.1581572, 0.98741156, 0, 17.426, 30)
+transform = Transform3D(1, 0, 0, 0, 0.98741156, 0.15815721, 0, -0.15815721, 0.98741156, 0, 17.426, 30)
 top_level = true
 script = ExtResource("7_h8ngr")
 weight = 2.0
