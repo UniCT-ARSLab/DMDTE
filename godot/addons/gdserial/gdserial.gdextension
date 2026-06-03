@@ -1,7 +1,7 @@
 [configuration]
 
 entry_symbol = "gdext_rust_init"
-compatibility_minimum = 4.2
+compatibility_minimum = 4.6
 
 [libraries]
 
@@ -18,7 +18,3 @@ macos.release.x86_64 =   "res://addons/gdserial/bin/macos-x86_64/libgdserial.dyl
 macos.debug.arm64 =      "res://addons/gdserial/bin/macos-arm64/libgdserial.dylib"
 macos.release.arm64 =    "res://addons/gdserial/bin/macos-arm64/libgdserial.dylib"
 
-[documentation]
-en =    "res://addons/gdserial/doc/en/"
-zh_CN = "res://addons/gdserial/doc/zh_CN/"
-pt_BR = "res://addons/gdserial/doc/pt_BR/"

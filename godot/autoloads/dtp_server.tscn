@@ -1,8 +1,9 @@
-[gd_scene format=3 uid="uid://dn0fneqhpt1gv"]
+[gd_scene format=3 uid="uid://p0u56qlcnil1"]
 
 [ext_resource type="Script" uid="uid://c6ev8ik1l1bbk" path="res://addons/dmdte/dtp/DTPServer.gd" id="1_4g6ts"]
 [ext_resource type="Script" uid="uid://crt522cvy2db5" path="res://addons/dmdte/dtp/outlets/DTPUDSOutlet.gd" id="2_37jui"]
 [ext_resource type="Script" uid="uid://dx4cc7hi0l3mn" path="res://addons/dmdte/dtp/outlets/DTPEnetOutlet.gd" id="3_adyew"]
+[ext_resource type="Script" uid="uid://map3ubxwe8hq" path="res://addons/dmdte/dtp/outlets/DTPESPNOWOutlet.gd" id="4_37jui"]
 
 [node name="DTPServer" type="Node" unique_id=1475048807]
 script = ExtResource("1_4g6ts")
@@ -16,3 +17,8 @@ metadata/_custom_type_script = "uid://crt522cvy2db5"
 [node name="DTPEnetOutlet" type="Node" parent="." unique_id=1696198080]
 script = ExtResource("3_adyew")
 metadata/_custom_type_script = "uid://dx4cc7hi0l3mn"
+
+[node name="DTPESPNOWOutlet" type="Node" parent="." unique_id=647441839]
+script = ExtResource("4_37jui")
+port = "/dev/ttyACM0"
+baudrate = 921600

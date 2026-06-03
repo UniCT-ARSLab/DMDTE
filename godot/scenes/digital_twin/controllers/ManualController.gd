@@ -39,7 +39,7 @@ func _polar_controller(dir: Vector3, gas: float):
 	var thetaFwd = atan2(fwd.z, fwd.x)
 	var thetaDir = atan2(dir.z, dir.x)
 	if gas < 0:
-		thetaFwd -= PI
+			thetaFwd -= PI
 	
 	var thetaErr = angle_difference(thetaFwd, thetaDir)
 	if dir.length() == 0: thetaErr = 0

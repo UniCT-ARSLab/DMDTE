@@ -25,7 +25,7 @@ Globals="*res://autoloads/Globals.gd"
 CmdArgs="*res://scripts/cmdargs.gd"
 LoaderScript="*res://autoloads/LoaderScript.gd"
 PhantomCameraManager="*uid://duq6jhf6unyis"
-DTPGlobalServer="*uid://dn0fneqhpt1gv"
+DTPGlobalServer="*uid://p0u56qlcnil1"
 
 [debug_draw_3d]
 
@@ -33,7 +33,7 @@ settings/addon_root_folder="res://addons/debug_draw_3d"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/dmdte/plugin.cfg", "res://addons/phantom_camera/plugin.cfg")
+enabled=PackedStringArray("res://addons/dmdte/plugin.cfg", "res://addons/gdserial/plugin.cfg", "res://addons/godobuf/plugin.cfg", "res://addons/phantom_camera/plugin.cfg")
 
 [global_group]
 
@@ -140,6 +140,15 @@ fire={
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":1,"pressure":0.0,"pressed":true,"script":null)
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":0,"pressure":0.0,"pressed":true,"script":null)
 ]
+}
+match_reset={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":77,"key_label":0,"unicode":109,"location":0,"echo":false,"script":null)
+]
+}
+start={
+"deadzone": 0.2,
+"events": []
 }
 
 [layer_names]
