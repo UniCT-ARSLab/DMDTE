@@ -122,7 +122,7 @@ func _handle_call(packet: PackedByteArray, it: int) -> int:
 			var method: Callable = ghost[desc.name]
 			var params = []
 			var jt:= it
-			for i in range(len(desc.params)):
+			for i in range(len(desc.args)):
 				var ty: Types.Type = desc.args[i]
 				var ty_size: int = Types.sizeof(ty)
 				var slice:= packet.slice(jt, jt + ty_size); jt+= ty_size

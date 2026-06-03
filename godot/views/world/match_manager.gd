@@ -50,7 +50,7 @@ func on_player_added(player: AlvikTank):
 				player.set_controllable(true)
 				player.set_invincible(false)
 			State.WaitingForPlayers:
-				player.set_can_shoot(false)
+				player.set_can_shoot(true) # posso sparare!
 				player.set_controllable(true)
 				player.set_invincible(true)
 			State.Countdown|State.Resetting:
