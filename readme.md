@@ -1,5 +1,6 @@
 # DMDTE: Distributed Multi-Agent Digital Twin Environment
 
+![Logo](misc/assets/dmdte-logo.png)
 An open-source framework for orchestrating and simulating distributed **Multi-Agent Digital Twins** in 3D virtual environments, built on **Godot Engine** and featuring native integration with embedded/IoT systems (**ESP32**, **Arduino Alvik**).
 
 The framework implements the architectural principles described in:
@@ -97,7 +98,9 @@ The framework has been evaluated through a distributed multiplayer tank battle d
 
 ## Authors
 
-* **Marco Spampinato** — *University of Catania (DMI)*
-  * **Supervisor:** Prof. Federico Fausto Santoro
+* **Marco Spampinato** — *University of Catania*
+  * **Supervisor:** Prof. Federico Fausto Santoro PhD
   * **Co-Supervisor:** Dr. Alessio Tudisco
-  * **Friends & Support:** Dr. Mario Bonanno, Dr. Angelo Spadola, Damiano Coppola
+  * **Friends & Support:** Dr. Mario Bonanno, Dr. Angelo Spadola, Dr. Andrea Leone, Dr. Miriana Russo, Damiano Coppola
+
+<p style="color: transparent">Grazie Mario</p>
